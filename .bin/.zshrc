@@ -71,3 +71,6 @@ setopt inc_append_history
 
 # mise activate
 eval "$(/opt/homebrew/bin/mise activate zsh)"
+
+# set theme via `starship`
+eval "$(starship init zsh)"
