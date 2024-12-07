@@ -1,3 +1,6 @@
+#!/bin/zsh
+set -e
+
 # rosetta
 sudo softwareupdate --install-rosetta
 

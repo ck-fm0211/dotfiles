@@ -1,3 +1,5 @@
+#!/bin/zsh
+set -e
 
 ## 隠しファイルを表示
 defaults write com.apple.finder AppleShowAllFiles -boolean true
