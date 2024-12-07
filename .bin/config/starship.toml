@@ -24,7 +24,7 @@ style = "#ff8c00"
 
 [python]
 style = "bold #ff8c00"
-format = '[${symbol}${pyenv_prefix}(${version} )(\($virtualenv\) )]($style)'
+format = '[${symbol}${pyenv_prefix}(${version} )]($style)'
 
 [git_branch]
 format = "[$symbol$branch]($style) "
