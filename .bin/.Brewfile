@@ -42,17 +42,6 @@ cask "notion-calendar"
 cask "obsidian"
 cask "visual-studio-code"
 cask "vlc"
-mas "1Password for Safari", id: 1569813296
-mas "BetterSnapTool", id: 417375580
-mas "GarageBand", id: 682658836
-mas "iMovie", id: 408981434
-mas "Keynote", id: 409183694
-mas "LINE", id: 539883307
-mas "MARKETSPEED", id: 946680495
-mas "Numbers", id: 409203825
-mas "Pages", id: 409201541
-mas "Slack", id: 803453959
-mas "The Unarchiver", id: 425424353
 vscode "4ops.terraform"
 vscode "adpyke.vscode-sql-formatter"
 vscode "bibhasdn.unique-lines"
