@@ -129,4 +129,5 @@ defaults write com.apple.terminal StringEncodings -array 4
 defaults write -g AppleShowAllExtensions -bool true
 
 # 再起動
-sudo shutdown -r now
+echo "Please restart the OS."
+echo "command: sudo shutdown -r now"
