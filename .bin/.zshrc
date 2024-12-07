@@ -1,5 +1,3 @@
-
-
 # homebrew
 eval "$(/opt/homebrew/bin/brew shellenv)"
 export PATH=/opt/homebrew/bin:$PATH
@@ -38,33 +36,10 @@ setopt correct
 # ビープ音を鳴らさない
 setopt no_beep
 
-### Added by Zinit's installer
-if [[ ! -f $HOME/.local/share/zinit/zinit.git/zinit.zsh ]]; then
-    print -P "%F{33} %F{220}Installing %F{33}ZDHARMA-CONTINUUM%F{220} Initiative Plugin Manager (%F{33}zdharma-continuum/zinit%F{220})…%f"
-    command mkdir -p "$HOME/.local/share/zinit" && command chmod g-rwX "$HOME/.local/share/zinit"
-    command git clone https://github.com/zdharma-continuum/zinit "$HOME/.local/share/zinit/zinit.git" && \
-        print -P "%F{33} %F{34}Installation successful.%f%b" || \
-        print -P "%F{160} The clone has failed.%f%b"
-fi
-
-source "$HOME/.local/share/zinit/zinit.git/zinit.zsh"
-autoload -Uz _zinit
-(( ${+_comps} )) && _comps[zinit]=_zinit
-
-# Load a few important annexes, without Turbo
-# (this is currently required for annexes)
-zinit light-mode for \
-    zdharma-continuum/zinit-annex-as-monitor \
-    zdharma-continuum/zinit-annex-bin-gem-node \
-    zdharma-continuum/zinit-annex-patch-dl \
-    zdharma-continuum/zinit-annex-rust
-
-### End of Zinit's installer chunk
-
-zinit self-update > /dev/null 2>&1
+# sheldon
+eval "$(sheldon source)"
 
 ## コマンド補完
-zinit ice wait'0'; zinit light zsh-users/zsh-completions
 autoload -Uz compinit && compinit
 
 ## 補完で小文字でも大文字にマッチさせる
@@ -73,22 +48,6 @@ zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
 ## 補完候補を一覧表示したとき、Tabや矢印で選択できるようにする
 zstyle ':completion:*:default' menu select=1 
 
-## 履歴補完
-zinit light zsh-users/zsh-autosuggestions
-
-# setup Prezto via zinit
-zinit snippet PZT::modules/helper/init.zsh
-
-# setup oh-my-zsh via zinit
-zinit snippet OMZL::git.zsh
-zinit snippet OMZP::git
-zinit cdclear -q
-
-## コマンドのシンタックスハイライト
-zinit light zdharma/fast-syntax-highlighting
-
-# anyframeのセットアップ
-zinit light mollifier/anyframe
 # Ctrl+rでヒストリ検索
 bindkey '^r' anyframe-widget-put-history
 # Ctrl+bでブランチ検索
@@ -109,9 +68,6 @@ setopt hist_ignore_dups
 setopt append_history
 # 履歴をインクリメンタルに追加
 setopt inc_append_history
-
-# set theme via `starship`
-eval "$(starship init zsh)"
 
 # mise activate
 eval "$(/opt/homebrew/bin/mise activate zsh)"
