@@ -90,8 +90,8 @@ zinit light zdharma/fast-syntax-highlighting
 # anyframeのセットアップ
 zinit light mollifier/anyframe
 # Ctrl+rでヒストリ検索
-bindkey '^r' anyframe-widget-execute-history
-#
+bindkey '^r' anyframe-widget-put-history
+# Ctrl+bでブランチ検索
 bindkey '^b' anyframe-widget-checkout-git-branch
 
 ## zsh settings
