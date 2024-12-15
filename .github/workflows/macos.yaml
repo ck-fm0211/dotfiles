@@ -21,7 +21,7 @@ jobs:
 
     - name: Run brew.sh
       env:
-        HOMEBREW_BUNDLE_FILE_GLOBAL: $HOME/.config/homebrew/.Brewfile
+        HOMEBREW_BUNDLE_FILE_GLOBAL: ${GITHUB_WORKSPACE}/.config/homebrew/.Brewfile
       # masはskip
       run: |
         temp_file=$(mktemp)
