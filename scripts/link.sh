@@ -31,7 +31,7 @@ create_symlink() {
 
   # ソースファイルが存在しない場合、警告を出してスキップ
   if [[ ! -e $src_full_path ]]; then
-    echo "Warning: Source file $src_full_path does not exist. Skipping." >&2
+    echo -e "Warning: Source file $src_full_path does not exist. Skipping.\n" >&2
     return
   fi
 
@@ -42,15 +42,9 @@ create_symlink() {
     mkdir -p "$dst_dir"
   fi
 
-  # 既存のシンボリックリンクやファイルを削除
-  if [[ -L $dst_full_path || -e $dst_full_path ]]; then
-    echo "Info: Removing existing file or symlink at $dst_full_path"
-    rm -rf "$dst_full_path"
-  fi
-
   # シンボリックリンクを作成
-  echo "Creating symlink: $src_full_path -> $dst_full_path"
-  ln -s "$src_full_path" "$dst_full_path"
+  ln -fnsv "$src_full_path" "$dst_full_path"
+  echo ""
 }
 
 # YAMLを解析してシンボリックリンクを作成
