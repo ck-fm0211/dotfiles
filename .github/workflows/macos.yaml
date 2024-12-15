@@ -20,14 +20,12 @@ jobs:
       run: ${GITHUB_WORKSPACE}/scripts/link.sh
 
     - name: Run brew.sh
-      env:
-        HOMEBREW_BUNDLE_FILE_GLOBAL: ${GITHUB_WORKSPACE}/.config/homebrew/.Brewfile
       # masはskip
       run: |
         temp_file=$(mktemp)
-        cat "$HOMEBREW_BUNDLE_FILE_GLOBAL"| sed '/^mas /d' > "$temp_file"
+        cat ${GITHUB_WORKSPACE}/.config/homebrew/.Brewfile | sed '/^mas /d' > "$temp_file"
         cat $temp_file
-        cat "$temp_file" > "$HOMEBREW_BUNDLE_FILE_GLOBAL"
+        cat "$temp_file" > ${GITHUB_WORKSPACE}/.config/homebrew/.Brewfile
         ${GITHUB_WORKSPACE}/scripts/brew.sh
 
     - name: Run sheldon.sh
