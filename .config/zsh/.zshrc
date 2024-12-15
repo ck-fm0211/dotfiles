@@ -1,11 +1,5 @@
 # homebrew
 eval "$(/opt/homebrew/bin/brew shellenv)"
-export PATH=/opt/homebrew/bin:$PATH
-
-# 環境変数
-export CLICOLOR=1
-export LANG=ja_JP.UTF-8
-export LSCOLORS=gxfxcxdxbxegedabagacad
 
 # add aliases
 # ls
@@ -93,3 +87,7 @@ eval "$(starship init zsh)"
 
 # aws cli
 export AWS_PAGER=""
+
+# gcloud
+if [ -f '/Users/chikafumi/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/chikafumi/google-cloud-sdk/path.zsh.inc'; fi
+if [ -f '/Users/chikafumi/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/chikafumi/google-cloud-sdk/completion.zsh.inc'; fi
