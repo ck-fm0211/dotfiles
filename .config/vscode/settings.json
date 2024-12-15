@@ -11,5 +11,6 @@
         "editor.lineHighlightBorder": "#2796ff55",
         "editorLineNumber.activeForeground": "#2797ff",
         "editorLineNumber.foreground": "#ffffff"
-    }
+    },
+    "terminal.integrated.fontFamily": "MesloLGL Nerd Font Mono"
 }
