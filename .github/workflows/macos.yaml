@@ -20,6 +20,8 @@ jobs:
       run: ${GITHUB_WORKSPACE}/scripts/link.sh
 
     - name: Run brew.sh
+      env:
+        HOMEBREW_BUNDLE_FILE_GLOBAL: $HOME/.config/homebrew/.Brewfile
       # masはskip
       run: |
         temp_file=$(mktemp)
