@@ -2,7 +2,7 @@
     "workbench.iconTheme": "vscode-icons",
     "workspaceExplorer.workspaceStorageDirectory": "/Applications/vscode_workspaces",
     "editor.fontFamily": "Osaka-Mono",
-    "editor.fontSize": 14,
+    "editor.fontSize": 16,
     "editor.lineHeight": 0,
     "editor.letterSpacing": 0,
     "workbench.fontAliasing": "default",
@@ -12,5 +12,6 @@
         "editorLineNumber.activeForeground": "#2797ff",
         "editorLineNumber.foreground": "#ffffff"
     },
-    "terminal.integrated.fontFamily": "MesloLGL Nerd Font Mono"
+    "terminal.integrated.fontFamily": "MesloLGL Nerd Font Mono",
+    "window.zoomLevel": 1
 }
