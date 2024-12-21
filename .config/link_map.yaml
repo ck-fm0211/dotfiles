@@ -42,8 +42,17 @@ zsh:
     src: .config/zsh/.zshrc
     dst: .config/zsh/.zshrc
   - 
-    src: .config/zsh/lazy.zsh
-    dst: .config/zsh/lazy.zsh
+    src: .config/zsh/completion.zsh
+    dst: .config/zsh/completion.zsh
+  - 
+    src: .config/zsh/bindkey.zsh
+    dst: .config/zsh/bindkey.zsh
+  - 
+    src: .config/zsh/settings.zsh
+    dst: .config/zsh/settings.zsh
+  - 
+    src: .config/zsh/alias.zsh
+    dst: .config/zsh/alias.zsh
 
 iterm2:
   src: .config/iterm2/com.googlecode.iterm2.plist

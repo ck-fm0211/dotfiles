@@ -28,6 +28,25 @@ defer = "{% for file in files %}zsh-defer source \"{{ file }}\"\n{% endfor %}"
 [plugins.compinit]
 inline = 'autoload -Uz compinit && zsh-defer compinit'
 
+[plugins.completion]
+local = "~/.config/zsh"
+use = ["completion.zsh"]
+apply = ['defer']
+
+[plugins.bindkey]
+local = "~/.config/zsh"
+use = ["bindkey.zsh"]
+apply = ['defer']
+
+[plugins.settings]
+local = "~/.config/zsh"
+use = ["settings.zsh"]
+
+[plugins.alias]
+local = "~/.config/zsh"
+use = ["alias.zsh"]
+apply = ['defer']
+
 [plugins.colors]
 inline = 'autoload -Uz colors && zsh-defer colors'
 
@@ -43,9 +62,22 @@ apply = ['defer']
 github = 'zsh-users/zsh-syntax-highlighting'
 apply = ['defer']
 
-[plugins.lazy]
-local = "~/.config/zsh"
-use = ["lazy.zsh"]
+[plugins.autopair]
+github = "hlissner/zsh-autopair"
+apply = ['defer']
+
+[plugins.kubectl-completion]
+remote = "https://raw.githubusercontent.com/nnao45/zsh-kubectl-completion/master/_kubectl"
+apply = ["defer"]
+
+[plugins.starship]
+inline = 'eval "$(starship init zsh)"'
+
+[plugins.homebrew]
+inline = 'eval "$(/opt/homebrew/bin/brew shellenv)"'
+
+[plugins.mise]
+inline = 'eval "$(mise activate zsh)"'
 
 [plugins.anyframe]
 github = 'mollifier/anyframe'
