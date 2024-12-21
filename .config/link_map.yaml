@@ -9,8 +9,21 @@ git:
 
 homebrew:
   # need `export $HOMEBREW_BUNDLE_FILE_GLOBAL=$HOME/.config/homebrew/.Brewfile`
-  src: .config/homebrew/.Brewfile
-  dst: .config/homebrew/.Brewfile
+  - 
+    src: .config/homebrew/Brewfile
+    dst: .config/homebrew/Brewfile
+  - 
+    src: .config/homebrew/Brewfile.cask
+    dst: .config/homebrew/Brewfile.cask
+  - 
+    src: .config/homebrew/Brewfile.mas
+    dst: .config/homebrew/Brewfile.mas
+  - 
+    src: .config/homebrew/Brewfile.taps
+    dst: .config/homebrew/Brewfile.taps
+  - 
+    src: .config/homebrew/Brewfile.vscode
+    dst: .config/homebrew/Brewfile.vscode
 
 sheldon:
   src: .config/sheldon/plugins.toml

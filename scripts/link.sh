@@ -9,7 +9,7 @@ define_error_exit() {
 command -v yq >/dev/null 2>&1 || define_error_exit "yq"
 
 # カレントディレクトリの設定
-BASE_DIR=$(cd $(dirname "$0") && cd .. && pwd)
+BASE_DIR="$(cd "$(dirname "$0")" && cd .. && pwd)"
 CONFIG_DIR="$BASE_DIR/.config"
 LINK_MAP_FILE="$CONFIG_DIR/link_map.yaml"
 

@@ -1,3 +1,5 @@
+# shellcheck disable=SC2148
+
 # コマンドのスペルを訂正
 setopt correct
 # ビープ音を鳴らさない
@@ -27,10 +29,6 @@ bindkey '^r' anyframe-widget-put-history
 bindkey '^b' anyframe-widget-checkout-git-branch
 
 ## zsh settings
-# ヒストリに保存するコマンド数
-HISTSIZE=10000
-# ヒストリファイルに保存するコマンド数
-SAVEHIST=10000
 # 重複するコマンド行は古い方を削除
 setopt hist_ignore_all_dups
 # 直前と同じコマンドラインはヒストリに追加しない

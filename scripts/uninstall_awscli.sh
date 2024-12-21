@@ -1,4 +1,4 @@
-#!/bin/zsh
+#!/bin/bash
 
 set -e
 
@@ -17,8 +17,8 @@ fi
 echo "AWS CLIは以下のパスにインストールされています: $aws_path"
 
 # 確認メッセージ
-read "?AWS CLIをアンインストールしますか？ (y/N): " confirm
-if [[ "$confirm" != "y" && "$confirm" != "Y" ]]; then
+read -p "?AWS CLIをアンインストールしますか？ (y/N): " -r confirm
+if [[ ! "$confirm" =~ ^[yY]$ ]]; then
     echo "アンインストールをキャンセルしました。"
     exit 0
 fi
@@ -36,7 +36,7 @@ sudo rm -rf /usr/local/aws-cli
 sudo rm -rf ~/.aws/
 
 # 削除確認
-if [ ! -f "$aws_path" ] && [ ! -f "${install_dir}/aws_completer" ] && [ ! -d "/usr/local/aws-cli" ] && [ ! -d "~/.aws/" ]; then
+if [ ! -f "$aws_path" ] && [ ! -f "${install_dir}/aws_completer" ] && [ ! -d "/usr/local/aws-cli" ] && [ ! -d "$HOME/.aws/" ]; then
     echo "AWS CLIは正常にアンインストールされました。"
 else
     echo "AWS CLIの一部がまだ存在する可能性があります。手動で確認してください。"
