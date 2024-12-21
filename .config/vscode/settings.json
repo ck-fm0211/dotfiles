@@ -13,5 +13,6 @@
         "editorLineNumber.foreground": "#ffffff"
     },
     "terminal.integrated.fontFamily": "MesloLGL Nerd Font Mono",
-    "window.zoomLevel": 1
+    "window.zoomLevel": 1,
+    "files.insertFinalNewline": true
 }
