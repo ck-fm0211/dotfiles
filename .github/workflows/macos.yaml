@@ -31,13 +31,13 @@ jobs:
       run: make sheldon 
 
     - name: Run mac_defaults.sh
-      run: make mac_defaults
+      run: make mac-defaults
 
     - name: install aws cli
-      run: make install_awscli
+      run: make install-awscli
 
     - name: install gcloud
-      run: make install_gcloud
+      run: make install-gcloud
 
     - name: shellcheck
       run: make shellcheck

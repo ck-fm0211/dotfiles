@@ -22,19 +22,19 @@ mac-defaults:
 	./scripts/mac_defaults.sh
 
 .PHONY: install_awscli
-install_awscli:
+install-awscli:
 	./scripts/install_awscli.sh
 
 .PHONY: install_gcloud
-install_gcloud:
+install-gcloud:
 	./scripts/install_gcloud.sh
 
 .PHONY: uninstall_awscli
-uninstall_awscli:
+uninstall-awscli:
 	./scripts/uninstall_awscli.sh
 
 .PHONY: uninstall_gcloud
-uninstall_gcloud:
+uninstall-gcloud:
 	./scripts/uninstall_gcloud.sh
 
 .PHONY: brew-bundle
