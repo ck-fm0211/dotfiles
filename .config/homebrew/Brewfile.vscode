@@ -1,6 +1,7 @@
 vscode "4ops.terraform"
 vscode "adpyke.vscode-sql-formatter"
 vscode "bibhasdn.unique-lines"
+vscode "charliermarsh.ruff"
 vscode "eamodio.gitlens"
 vscode "eriklynd.json-tools"
 vscode "fabiospampinato.vscode-diff"
