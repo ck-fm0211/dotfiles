@@ -1,5 +1,12 @@
 # shellcheck disable=SC2148
 
+# zsh
+export HISTFILE="$XDG_STATE_HOME"/zsh/history
+# ヒストリに保存するコマンド数
+export HISTSIZE=10000
+# ヒストリファイルに保存するコマンド数
+export SAVEHIST=10000
+
 # sheldon
 eval "$(sheldon source)"
 

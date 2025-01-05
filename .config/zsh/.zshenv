@@ -7,13 +7,6 @@ export XDG_CONFIG_HOME=$HOME/.config
 export XDG_STATE_HOME=$HOME/.local/state
 export XDG_CACHE_HOME=$HOME/.cache
 
-# zsh
-export HISTFILE="$XDG_STATE_HOME"/zsh/history
-# ヒストリに保存するコマンド数
-export HISTSIZE=10000
-# ヒストリファイルに保存するコマンド数
-export SAVEHIST=10000
-
 # homebrew
 export PATH=/opt/homebrew/bin:$PATH
 export HOMEBREW_BUNDLE_FILE_GLOBAL=$HOME/.config/homebrew/.Brewfile
