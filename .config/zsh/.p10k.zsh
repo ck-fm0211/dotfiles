@@ -37,6 +37,7 @@
     vcs                     # git status
     # =========================[ Line #2 ]=========================
     newline                 # \n
+    command_execution_time  # duration of the last command
     time                    # current time
     prompt_char             # prompt symbol
   )
@@ -571,6 +572,9 @@
   # typeset -g POWERLEVEL9K_COMMAND_EXECUTION_TIME_PREFIX='%248Ftook '
 
   typeset -g POWERLEVEL9K_TIME_LEFT_RIGHT_WHITESPACE=' %k%234F\uE0B4'
+
+  function p10k-on-post-prompt() { p10k display '1|2/left_frame'=hide '2/left/*'=show }
+  function p10k-on-pre-prompt()  { p10k display '1|2/left_frame'=show '2/left/*'=hide }
 
   #######################[ background_jobs: presence of background jobs ]#######################
   # Don't show the number of background jobs.
