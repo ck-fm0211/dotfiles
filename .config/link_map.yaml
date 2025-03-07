@@ -28,11 +28,6 @@ sheldon:
   src: .config/sheldon/plugins.toml
   dst: .config/sheldon/plugins.toml
 
-starship:
-  # need `export $STARSHIP_CONFIG=$HOME/.config/starship/starship.toml`
-  src: .config/starship/starship.toml
-  dst: .config/starship/starship.toml
-
 zsh:
   -
     src: .config/zsh/.zshenv

@@ -70,9 +70,6 @@ apply = ['defer']
 remote = "https://raw.githubusercontent.com/nnao45/zsh-kubectl-completion/master/_kubectl"
 apply = ["defer"]
 
-# [plugins.starship]
-# inline = 'eval "$(starship init zsh)"'
-
 [plugins.powerlevel10k]
 github = "romkatv/powerlevel10k"
 
