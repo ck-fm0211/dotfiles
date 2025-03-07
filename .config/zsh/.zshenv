@@ -24,6 +24,9 @@ export LESSHISTFILE="$XDG_STATE_HOME"/less/history
 export PYTHONSTARTUP="$HOME"/python/pythonrc
 touch "$XDG_STATE_HOME/python_history"
 
+#bat(cat)
+export BAT_THEME="Solarized (dark)"
+
 # 環境変数
 export CLICOLOR=1
 export LANG=ja_JP.UTF-8
