@@ -81,4 +81,5 @@
     "editor.wordWrap": "off"
   },
   "ruff.lineLength": 150,
+  "terraform.languageServer.enable": false,
 }

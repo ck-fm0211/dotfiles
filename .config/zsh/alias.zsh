@@ -23,9 +23,14 @@ if type "gdate" > /dev/null 2>&1; then
     alias date="gdate"
 fi
 
-# date
+# sed
 if type "gsed" > /dev/null 2>&1; then
     alias sed='gsed'
+fi
+
+# diff
+if type "colordiff" > /dev/null 2>&1; then
+    alias diff='colordiff'
 fi
 
 alias rm='rm -i'
