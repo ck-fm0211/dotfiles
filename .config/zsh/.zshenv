@@ -31,3 +31,6 @@ export BAT_THEME="Solarized (dark)"
 export CLICOLOR=1
 export LANG=ja_JP.UTF-8
 export LSCOLORS=gxfxcxdxbxegedabagacad
+
+# PATH
+export PATH="$HOME/.local/bin:$HOME/.local/bin/scripts:$PATH"
