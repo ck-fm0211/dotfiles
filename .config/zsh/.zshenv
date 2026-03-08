@@ -36,4 +36,4 @@ export LSCOLORS=gxfxcxdxbxegedabagacad
 export PATH="$HOME/.local/bin:$HOME/.local/bin/scripts:$PATH"
 
 # Claude Code
-export CLAUDE_CONFIG_DIR="$XDG_CONFIG_HOME/claude"
+export CLAUDE_CONFIG_DIR="$XDG_CONFIG_HOME"/claude
