@@ -48,6 +48,9 @@ zsh:
     src: .config/zsh/alias.zsh
     dst: .config/zsh/alias.zsh
   -
+    src: .config/zsh/functions.zsh
+    dst: .config/zsh/functions.zsh
+  -
     src: .config/zsh/.p10k.zsh
     dst: .config/zsh/.p10k.zsh
 

@@ -14,11 +14,6 @@ shell = "zsh"
 
 [plugins]
 
-# For example:
-#
-# [plugins.base16]
-# github = "chriskempson/base16-shell"
-
 [plugins.zsh-defer]
 github = "romkatv/zsh-defer"
 
@@ -28,9 +23,24 @@ defer = "{% for file in files %}zsh-defer source \"{{ file }}\"\n{% endfor %}"
 [plugins.compinit]
 inline = 'autoload -Uz compinit && zsh-defer compinit'
 
+# ローカル設定ファイル群
+[plugins.settings]
+local = "~/.config/zsh"
+use = ["settings.zsh"]
+
 [plugins.completion]
 local = "~/.config/zsh"
 use = ["completion.zsh"]
+apply = ['defer']
+
+[plugins.functions]
+local = "~/.config/zsh"
+use = ["functions.zsh"]
+apply = ['defer']
+
+[plugins.alias]
+local = "~/.config/zsh"
+use = ["alias.zsh"]
 apply = ['defer']
 
 [plugins.bindkey]
@@ -38,18 +48,10 @@ local = "~/.config/zsh"
 use = ["bindkey.zsh"]
 apply = ['defer']
 
-[plugins.settings]
-local = "~/.config/zsh"
-use = ["settings.zsh"]
-
-[plugins.alias]
-local = "~/.config/zsh"
-use = ["alias.zsh"]
-apply = ['defer']
-
 [plugins.colors]
 inline = 'autoload -Uz colors && zsh-defer colors'
 
+# GitHub プラグイン
 [plugins.zsh-autosuggestions]
 github = 'zsh-users/zsh-autosuggestions'
 apply = ['defer']
@@ -73,11 +75,19 @@ apply = ["defer"]
 [plugins.powerlevel10k]
 github = "romkatv/powerlevel10k"
 
+# Apple Silicon / Intel 両対応
+# /opt/homebrew (Apple Silicon) または /usr/local (Intel) を自動判定
 [plugins.homebrew]
-inline = 'eval "$(/opt/homebrew/bin/brew shellenv)"'
+inline = '''
+if [[ -x /opt/homebrew/bin/brew ]]; then
+  eval "$(/opt/homebrew/bin/brew shellenv)"
+elif [[ -x /usr/local/bin/brew ]]; then
+  eval "$(/usr/local/bin/brew shellenv)"
+fi
+'''
 
 [plugins.mise]
-inline = 'eval "$(mise activate zsh)"'
+inline = 'command -v mise >/dev/null 2>&1 && eval "$(mise activate zsh)"'
 
 [plugins.anyframe]
 github = 'mollifier/anyframe'

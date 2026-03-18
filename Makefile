@@ -1,74 +1,111 @@
+.DEFAULT_GOAL := help
+
 .PHONY: help
-help: ## Show this help message
+help: ## コマンド一覧を表示
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-25s\033[0m %s\n", $$1, $$2}'
 
-.PHONY: setup
-setup: install link brew-bundle-taps brew-bundle brew-bundle-cask brew-bundle-vscode sheldon mac-defaults install-awscli install-gcloud install-claude-code ## Run full setup (install, link, brew, sheldon, mac-defaults, cloud tools)
+# ============================================================
+# セットアップ
+# ============================================================
 
-.PHONY: shellcheck
-shellcheck: ## Run shellcheck on all shell scripts
-	shellcheck ./**/*.sh ./.config/zsh/.zshrc ./.config/zsh/.zshenv ./.local/**/**/*.sh
+.PHONY: setup
+setup: install link brew-bundle-taps brew-bundle brew-bundle-cask brew-bundle-vscode sheldon mac-defaults install-awscli install-gcloud install-claude-code ## フルセットアップを一括実行
 
 .PHONY: install
-install: ## Install Homebrew, Rosetta, XDG directories, and yq
+install: ## Homebrew・Rosetta・XDG ディレクトリ・yq をインストール
 	./scripts/install.sh
 
 .PHONY: link
-link: ## Create symlinks based on .config/link_map.yaml
+link: ## link_map.yaml に従いシンボリックリンクを作成
 	./scripts/link.sh
 
+.PHONY: backup
+backup: ## link.sh が上書きするファイルを事前にバックアップ（~/.dotfiles-backup/）
+	./scripts/backup.sh
+
 .PHONY: sheldon
-sheldon: ## Initialize sheldon zsh plugin manager
+sheldon: ## sheldon（Zsh プラグインマネージャー）を初期化
 	./scripts/sheldon.sh
 
 .PHONY: mac-defaults
-mac-defaults: ## Apply macOS system preferences
+mac-defaults: ## macOS システム設定を適用（Finder・Dock・トラックパッドなど）
 	./scripts/mac_defaults.sh
 
-.PHONY: install-awscli
-install-awscli: ## Install AWS CLI v2
-	./scripts/install_awscli.sh
-
-.PHONY: install-gcloud
-install-gcloud: ## Install Google Cloud SDK
-	./scripts/install_gcloud.sh
-
-.PHONY: uninstall-awscli
-uninstall-awscli: ## Uninstall AWS CLI v2
-	./scripts/uninstall_awscli.sh
-
-.PHONY: uninstall-gcloud
-uninstall-gcloud: ## Uninstall Google Cloud SDK
-	./scripts/uninstall_gcloud.sh
+# ============================================================
+# Homebrew
+# ============================================================
 
 .PHONY: brew-bundle
-brew-bundle: ## Install packages from Brewfile
+brew-bundle: ## Brewfile の CLI パッケージをインストール
 	brew bundle --file=./.config/homebrew/Brewfile
 
 .PHONY: brew-bundle-mas
-brew-bundle-mas: ## Install Mac App Store apps from Brewfile.mas
+brew-bundle-mas: ## Brewfile.mas の App Store アプリをインストール
 	brew bundle --file=./.config/homebrew/Brewfile.mas
 
 .PHONY: brew-bundle-cask
-brew-bundle-cask: ## Install cask apps from Brewfile.cask
+brew-bundle-cask: ## Brewfile.cask のデスクトップアプリをインストール
 	brew bundle --file=./.config/homebrew/Brewfile.cask
 
 .PHONY: brew-bundle-taps
-brew-bundle-taps: ## Add Homebrew taps from Brewfile.taps
+brew-bundle-taps: ## Brewfile.taps のサードパーティ tap を追加
 	brew bundle --file=./.config/homebrew/Brewfile.taps
 
 .PHONY: brew-bundle-vscode
-brew-bundle-vscode: ## Install VSCode extensions from Brewfile.vscode
+brew-bundle-vscode: ## Brewfile.vscode の VSCode 拡張機能をインストール
 	brew bundle --file=./.config/homebrew/Brewfile.vscode
 
 .PHONY: brew-dump
-brew-dump: ## Dump current Homebrew state to Brewfiles
+brew-dump: ## 現在のインストール済みパッケージを Brewfile に書き出す
 	./scripts/brew_dumps.sh
 
+.PHONY: update
+update: ## Homebrew パッケージ・sheldon プラグイン・mise ツールをまとめてアップデート
+	@echo ">>> Homebrew をアップデートしています..."
+	brew update && brew upgrade && brew cleanup
+	@echo ">>> sheldon プラグインをアップデートしています..."
+	sheldon lock --update
+	@echo ">>> mise ツールをアップデートしています..."
+	mise self-update --yes 2>/dev/null || true
+	mise upgrade 2>/dev/null || true
+	@echo ">>> アップデート完了"
+
+# ============================================================
+# 外部ツール・SDK
+# ============================================================
+
+.PHONY: install-awscli
+install-awscli: ## AWS CLI v2 をインストール
+	./scripts/install_awscli.sh
+
+.PHONY: uninstall-awscli
+uninstall-awscli: ## AWS CLI v2 をアンインストール
+	./scripts/uninstall_awscli.sh
+
+.PHONY: install-gcloud
+install-gcloud: ## Google Cloud SDK をインストール
+	./scripts/install_gcloud.sh
+
+.PHONY: uninstall-gcloud
+uninstall-gcloud: ## Google Cloud SDK をアンインストール
+	./scripts/uninstall_gcloud.sh
+
 .PHONY: install-claude-code
-install-claude-code: ## Install Claude Code (Anthropic CLI)
+install-claude-code: ## Claude Code（Anthropic CLI）をインストール
 	./scripts/install_claude_code.sh
 
 .PHONY: uninstall-claude-code
-uninstall-claude-code: ## Uninstall Claude Code
+uninstall-claude-code: ## Claude Code をアンインストール
 	./scripts/uninstall_claude_code.sh
+
+# ============================================================
+# 診断・メンテナンス
+# ============================================================
+
+.PHONY: doctor
+doctor: ## 環境の健全性チェック（シンボリックリンク・コマンド・設定を検査）
+	./scripts/doctor.sh
+
+.PHONY: shellcheck
+shellcheck: ## シェルスクリプト・Zsh 設定ファイルの構文チェック
+	shellcheck ./**/*.sh ./.config/zsh/.zshrc ./.config/zsh/.zshenv ./.local/**/**/*.sh
