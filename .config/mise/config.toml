@@ -1,0 +1,24 @@
+# mise 設定ファイル
+# https://mise.jdx.dev/configuration.html
+#
+# プロジェクトごとに上書き可能。各プロジェクトのルートに .mise.toml を置くことで
+# バージョンをオーバーライドできる。
+
+[tools]
+# Node.js: LTS を常に使用
+node = "lts"
+
+# Python: 最新安定版
+python = "latest"
+
+# Go: 最新安定版
+go = "latest"
+
+# Terraform
+terraform = "latest"
+
+[settings]
+# バージョンが見つからない場合に自動インストール
+always_keep_download = false
+# プラグインの自動更新
+plugin_autoupdate_last_check_duration = "1 week"

@@ -24,6 +24,10 @@ defer = "{% for file in files %}zsh-defer source \"{{ file }}\"\n{% endfor %}"
 inline = 'autoload -Uz compinit && zsh-defer compinit'
 
 # ローカル設定ファイル群
+[plugins.path]
+local = "~/.config/zsh"
+use = ["path.zsh"]
+
 [plugins.settings]
 local = "~/.config/zsh"
 use = ["settings.zsh"]

@@ -1,71 +1,149 @@
 #!/bin/bash
+# link.sh - link_map.yaml に基づきシンボリックリンクを作成する
+#
+# オプション:
+#   --dry-run    実際には作成せずに対象を表示するだけ
+#   --verbose    詳細なログを表示
 
-# 必要なコマンドの存在を確認
+set -euo pipefail
+
+DRY_RUN=0
+VERBOSE=0
+
+while [[ $# -gt 0 ]]; do
+  case "$1" in
+    --dry-run) DRY_RUN=1 ;;
+    --verbose) VERBOSE=1 ;;
+    *) echo "Unknown option: $1" >&2; exit 1 ;;
+  esac
+  shift
+done
+
+# ----------- 色付きログ -----------
+if [ -t 1 ] && command -v tput >/dev/null 2>&1; then
+  GREEN="$(tput setaf 2)"; YELLOW="$(tput setaf 3)"
+  RED="$(tput setaf 1)"; BOLD="$(tput bold)"; RESET="$(tput sgr0)"
+else
+  GREEN=""; YELLOW=""; RED=""; BOLD=""; RESET=""
+fi
+
+ok()   { echo "  ${GREEN}✓${RESET} $*"; }
+warn() { echo "  ${YELLOW}!${RESET} $*" >&2; }
+skip() { [ "$VERBOSE" -eq 1 ] && echo "  ${YELLOW}-${RESET} $*" || true; }
+fail() { echo "  ${RED}✗${RESET} $*" >&2; }
+log()  { echo "${BOLD}$*${RESET}"; }
+
+# ----------- 必要なコマンドの確認 -----------
 define_error_exit() {
   echo "Error: $1 is not installed. Please install it first." >&2
   exit 1
 }
-
 command -v yq >/dev/null 2>&1 || define_error_exit "yq"
 
-# カレントディレクトリの設定
-BASE_DIR="$(cd "$(dirname "$0")" && cd .. && pwd)"
+# ----------- パス設定 -----------
+BASE_DIR="$(cd "$(dirname "$0")/.." && pwd)"
 CONFIG_DIR="$BASE_DIR/.config"
 LINK_MAP_FILE="$CONFIG_DIR/link_map.yaml"
 
-# link_map.yamlの存在確認
 if [[ ! -f $LINK_MAP_FILE ]]; then
   echo "Error: link_map.yaml not found in $CONFIG_DIR" >&2
   exit 1
 fi
 
-echo "link_map.yaml: $CONFIG_DIR/link_map.yaml"
+log "dotfiles: $BASE_DIR"
+log "link_map: $LINK_MAP_FILE"
+[ "$DRY_RUN" -eq 1 ] && log "=== DRY RUN モード（実際には変更しません）==="
+echo ""
 
-# シンボリックリンク作成関数
+CREATED=0
+UPDATED=0
+SKIPPED=0
+WARNINGS=0
+
+# ----------- シンボリックリンク作成関数 -----------
 create_symlink() {
-  local src=$1
-  local dst=$2
+  local src="$1"
+  local dst="$2"
 
-  src_full_path="$BASE_DIR/$src"
-  dst_full_path="$HOME/$dst"
+  local src_full="$BASE_DIR/$src"
+  local dst_full="$HOME/$dst"
 
-  # ソースファイルが存在しない場合、警告を出してスキップ
-  if [[ ! -e $src_full_path ]]; then
-    echo -e "Warning: Source file $src_full_path does not exist. Skipping.\n" >&2
+  # ソースが存在しない場合はスキップ
+  if [[ ! -e "$src_full" ]]; then
+    warn "ソースが存在しません（スキップ）: $src_full"
+    WARNINGS=$((WARNINGS+1))
     return
   fi
 
-  # シンボリックリンクを張る先のディレクトリを作成
-  dst_dir=$(dirname "$dst_full_path")
-  if [[ ! -d $dst_dir ]]; then
-    echo "Creating directory: $dst_dir"
-    mkdir -p "$dst_dir"
+  # 宛先ディレクトリを作成
+  local dst_dir
+  dst_dir=$(dirname "$dst_full")
+  if [[ ! -d "$dst_dir" ]]; then
+    if [ "$DRY_RUN" -eq 0 ]; then
+      mkdir -p "$dst_dir"
+    fi
+    [ "$VERBOSE" -eq 1 ] && echo "  mkdir: $dst_dir"
+  fi
+
+  # 既存リンクの確認
+  if [[ -L "$dst_full" ]]; then
+    local current_target
+    current_target=$(readlink "$dst_full")
+    if [[ "$current_target" == "$src_full" ]]; then
+      skip "すでにリンク済み: $dst -> $src"
+      SKIPPED=$((SKIPPED+1))
+      return
+    else
+      # 別のリンク先に向いている
+      if [ "$DRY_RUN" -eq 0 ]; then
+        ln -fns "$src_full" "$dst_full"
+      fi
+      ok "[DRY] 更新: $dst -> $src  (旧: $current_target)"  # dry-run なら表示のみ
+      [ "$DRY_RUN" -eq 0 ] && ok "更新: $dst -> $src"
+      UPDATED=$((UPDATED+1))
+      return
+    fi
+  elif [[ -e "$dst_full" ]]; then
+    warn "既存ファイルを上書きします: $dst_full（元ファイルのバックアップは make backup で行ってください）"
+    WARNINGS=$((WARNINGS+1))
   fi
 
   # シンボリックリンクを作成
-  ln -fnsv "$src_full_path" "$dst_full_path"
-  echo ""
+  if [ "$DRY_RUN" -eq 0 ]; then
+    ln -fns "$src_full" "$dst_full"
+    ok "作成: $dst -> $src"
+  else
+    ok "[DRY] 作成: $dst -> $src"
+  fi
+  CREATED=$((CREATED+1))
 }
 
-# YAMLを解析してシンボリックリンクを作成
+# ----------- YAML を解析してリンク作成 -----------
 apps=$(yq eval 'keys | .[]' "$LINK_MAP_FILE")
 for app in $apps; do
+  echo "${BOLD}[$app]${RESET}"
   items=$(yq eval ".$app" "$LINK_MAP_FILE")
 
   if [[ $(yq eval 'type' <<< "$items") == "!!seq" ]]; then
-    # 配列の場合
     for pair in $(echo "$items" | yq eval '.[] | @json' -); do
       src=$(echo "$pair" | yq eval '.src' -)
       dst=$(echo "$pair" | yq eval '.dst' -)
       create_symlink "$src" "$dst"
     done
   else
-    # オブジェクトの場合
     src=$(yq eval '.src' <<< "$items")
     dst=$(yq eval '.dst' <<< "$items")
     create_symlink "$src" "$dst"
   fi
-
+  echo ""
 done
 
-echo "Dotfiles setup completed successfully."
+# ----------- サマリー -----------
+echo "${BOLD}─── 結果 ────────────────────────────────────────${RESET}"
+echo "  ${GREEN}✓ 作成${RESET}   $CREATED"
+echo "  ${YELLOW}→ 更新${RESET}   $UPDATED"
+echo "  - スキップ $SKIPPED"
+[ "$WARNINGS" -gt 0 ] && echo "  ${YELLOW}! 警告${RESET}   $WARNINGS" || true
+echo ""
+[ "$DRY_RUN" -eq 1 ] && echo "${YELLOW}DRY RUN: 実際には何も変更されていません。${RESET}" \
+  || echo "${GREEN}${BOLD}セットアップ完了！${RESET}"

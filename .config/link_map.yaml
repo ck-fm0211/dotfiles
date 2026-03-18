@@ -28,6 +28,10 @@ sheldon:
   src: .config/sheldon/plugins.toml
   dst: .config/sheldon/plugins.toml
 
+mise:
+  src: .config/mise/config.toml
+  dst: .config/mise/config.toml
+
 zsh:
   -
     src: .config/zsh/.zshenv
@@ -35,6 +39,9 @@ zsh:
   -
     src: .config/zsh/.zshrc
     dst: .config/zsh/.zshrc
+  -
+    src: .config/zsh/path.zsh
+    dst: .config/zsh/path.zsh
   -
     src: .config/zsh/completion.zsh
     dst: .config/zsh/completion.zsh
@@ -59,8 +66,12 @@ iterm2:
   dst: .config/iterm2/com.googlecode.iterm2.plist
 
 vscode:
-  src: .config/vscode/settings.json
-  dst: "Library/Application Support/Code/User/settings.json"
+  -
+    src: .config/vscode/settings.json
+    dst: "Library/Application Support/Code/User/settings.json"
+  -
+    src: .config/vscode/keybindings.json
+    dst: "Library/Application Support/Code/User/keybindings.json"
 
 python:
   src: .config/python/pythonrc
