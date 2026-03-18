@@ -30,6 +30,8 @@
 	quotepath = false
 	# 末尾の空白を警告
 	whitespace = trailing-space,space-before-tab
+	# グローバル Git フック（Conventional Commits 検証など）
+	hooksPath = ~/.config/git/hooks
 [init]
 	defaultBranch = main
 [pull]
@@ -49,3 +51,14 @@
 [merge]
 	# マージコミットに差分サマリを含める
 	log = true
+[rebase]
+	# リベース時に autostash を有効化（ダーティな作業ツリーでも rebase 可能）
+	autostash = true
+[rerere]
+	# コンフリクト解決を記憶して再利用
+	enabled = true
+[branch]
+	# 新しいブランチはデフォルトでリベース設定
+	autosetuprebase = always
+[color]
+	ui = auto

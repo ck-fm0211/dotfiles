@@ -6,6 +6,9 @@ git:
   -
     src: .config/git/ignore
     dst: .config/git/ignore
+  -
+    src: .config/git/hooks
+    dst: .config/git/hooks
 
 homebrew:
   -
@@ -80,6 +83,14 @@ python:
 custom_scripts:
   src: .local/bin/scripts
   dst: .local/bin/scripts
+
+bat:
+  src: .config/bat/config
+  dst: .config/bat/config
+
+ripgrep:
+  src: .config/ripgrep/config
+  dst: .config/ripgrep/config
 
 claude_code:
   -

@@ -9,7 +9,7 @@ help: ## コマンド一覧を表示
 # ============================================================
 
 .PHONY: setup
-setup: install link brew-bundle-taps brew-bundle brew-bundle-cask brew-bundle-vscode sheldon mac-defaults install-awscli install-gcloud install-claude-code ## フルセットアップを一括実行
+setup: install link brew-bundle-taps brew-bundle brew-bundle-cask brew-bundle-vscode sheldon mac-defaults git-hooks install-awscli install-gcloud install-claude-code ## フルセットアップを一括実行
 
 .PHONY: bootstrap
 bootstrap: ## 新規 Mac で make を使わずに一発セットアップ（install.sh → link.sh → make setup の順に実行）
@@ -115,8 +115,22 @@ uninstall-claude-code: ## Claude Code をアンインストール
 # ============================================================
 
 .PHONY: doctor
-doctor: ## 環境の健全性チェック（シンボリックリンク・コマンド・設定を検査）
+doctor: ## 環境の健全性チェック（macOS バージョン・ディスク・Git・mise・シンボリックリンク等）
 	./scripts/doctor.sh
+
+.PHONY: clean
+clean: ## 各種キャッシュを削除してディスク容量を解放（Homebrew・pip・npm・Go・Docker・Zsh）
+	./scripts/clean.sh
+
+.PHONY: clean-dry
+clean-dry: ## クリーンアップの対象を表示するだけ（実際には削除しない）
+	DRY_RUN=1 ./scripts/clean.sh
+
+.PHONY: git-hooks
+git-hooks: ## グローバル Git フック（core.hooksPath）を設定する
+	git config --global core.hooksPath "$$HOME/.config/git/hooks"
+	@echo "  ✓ core.hooksPath = $$(git config --global core.hooksPath)"
+	@echo "  ✓ Conventional Commits フックが有効になりました"
 
 .PHONY: shellcheck
 shellcheck: ## シェルスクリプト・Zsh 設定ファイルの構文チェック

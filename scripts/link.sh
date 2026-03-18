@@ -34,11 +34,7 @@ fail() { echo "  ${RED}✗${RESET} $*" >&2; }
 log()  { echo "${BOLD}$*${RESET}"; }
 
 # ----------- 必要なコマンドの確認 -----------
-define_error_exit() {
-  echo "Error: $1 is not installed. Please install it first." >&2
-  exit 1
-}
-command -v yq >/dev/null 2>&1 || define_error_exit "yq"
+command -v yq >/dev/null 2>&1 || { echo "Error: yq is not installed. Please install it first." >&2; exit 1; }
 
 # ----------- パス設定 -----------
 BASE_DIR="$(cd "$(dirname "$0")/.." && pwd)"
@@ -97,9 +93,10 @@ create_symlink() {
       # 別のリンク先に向いている
       if [ "$DRY_RUN" -eq 0 ]; then
         ln -fns "$src_full" "$dst_full"
+        ok "更新: $dst -> $src  (旧: $current_target)"
+      else
+        ok "[DRY] 更新: $dst -> $src  (旧: $current_target)"
       fi
-      ok "[DRY] 更新: $dst -> $src  (旧: $current_target)"  # dry-run なら表示のみ
-      [ "$DRY_RUN" -eq 0 ] && ok "更新: $dst -> $src"
       UPDATED=$((UPDATED+1))
       return
     fi
