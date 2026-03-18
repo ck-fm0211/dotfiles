@@ -11,7 +11,7 @@ jobs:
     runs-on: macos-latest
 
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
 
     - name: Run install.sh
       run: make install
@@ -19,13 +19,13 @@ jobs:
     - name: Run link.sh
       run: make link
 
-    - name: Run brew
+    - name: Run brew (taps → brews → casks → vscode)
       run: |
         make brew-bundle-taps
         make brew-bundle
         make brew-bundle-cask
         make brew-bundle-vscode
-        # make brew-bundle-mas # skip
+        # make brew-bundle-mas # Mac App Store は認証が必要なためスキップ
 
     - name: Run sheldon.sh
       run: make sheldon
@@ -33,14 +33,14 @@ jobs:
     - name: Run mac_defaults.sh
       run: make mac-defaults
 
-    - name: install aws cli
+    - name: Install AWS CLI
       run: make install-awscli
 
-    - name: install gcloud
+    - name: Install Google Cloud SDK
       run: make install-gcloud
 
-    - name: install claude-code
+    - name: Install Claude Code
       run: make install-claude-code
 
-    - name: shellcheck
+    - name: Run shellcheck
       run: make shellcheck
