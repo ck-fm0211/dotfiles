@@ -1,8 +1,18 @@
 # Plans.md
 
-## タスク一覧
+作成日: 2026-03-29
 
-| # | Task | 内容 | DoD | Depends | Status |
-|---|------|------|-----|---------|--------|
-| 1 | CLAUDE.md コミット | リポジトリルートの CLAUDE.md（未追跡）をコミットする | git status で CLAUDE.md が untracked でなくなること | - | cc:完了 [5652120] |
-| 2 | PR 作成 | claude/improve-repository-7JU4Z ブランチを main にマージする PR を作成する | PR が GitHub に作成されること | 1 | cc:完了 |
+---
+
+## Phase 1: `.claude/` と `.config/claude/` の役割分離
+
+| Task | 内容 | DoD | Depends | Status |
+|------|------|-----|---------|--------|
+| 1.1 | `.claude/settings.json` 作成 | ファイルが存在し JSON として valid であること | - | cc:TODO |
+| 1.2 | `CLAUDE.md` に両ディレクトリの区別を明記 | `.claude/` と `.config/claude/` の役割が読めば分かること | 1.1 | cc:TODO |
+
+## Phase 2: GitHub Actions 軽量 PR バリデーション
+
+| Task | 内容 | DoD | Depends | Status |
+|------|------|-----|---------|--------|
+| 2.1 | `validate.yaml` ワークフロー作成 | PR 時に validate ジョブが pass すること | Phase 1 | cc:TODO |

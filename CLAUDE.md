@@ -61,8 +61,22 @@ make clean-dry         # 削除対象のプレビュー
 ### ランタイムバージョン管理
 [.config/mise/config.toml](.config/mise/config.toml) でグローバルバージョンを固定（Node LTS・Python/Go/Terraform 最新）。プロジェクト単位の上書きは `.mise.toml` で行う。
 
-### Claude Code 設定
-[.config/claude/settings.json](.config/claude/settings.json) で `git`・`make`・`brew`・`sheldon`・`mise` の実行を許可し、`rm`・`sudo`・`curl`・`wget`・`.zshrc`/`.bashrc` の編集・`.env` ファイル・秘密鍵・SSH キー・Git 認証情報の読み取りを明示的に禁止している。
+### Claude Code 設定 — 2 つのディレクトリの区別
+
+このリポジトリには Claude Code 関連のディレクトリが **2 つ**存在する。役割が異なるため混同しないこと。
+
+| ディレクトリ | 役割 | `make link` 後 | 編集すべき場面 |
+|---|---|---|---|
+| [.config/claude/](.config/claude/) | **グローバル設定のソース**。dotfiles として管理し、シンボリックリンクで `~/.config/claude/` に展開される | `~/.config/claude/` | 全マシン共通の Claude 設定を変更したい時 |
+| [.claude/](.claude/) | **このリポジトリ専用のプロジェクト設定**。シンボリックリンクされない。グローバル設定に追加で適用される | ―（変化しない） | このリポジトリで作業する Claude の挙動を調整したい時 |
+
+**ファイルの対応:**
+
+- `.config/claude/settings.json` → `~/.config/claude/settings.json`（グローバル権限設定）
+- `.config/claude/CLAUDE.md` → `~/.config/claude/CLAUDE.md`（全プロジェクト共通の Claude 指示）
+- `.claude/settings.json` → プロジェクト固有設定（`shellcheck`・`yq` の追加許可など最小限）
+
+**グローバル設定の内容:** `git`・`make`・`brew`・`sheldon`・`mise` の実行を許可し、`rm`・`sudo`・`curl`・`wget`・`.zshrc`/`.bashrc` の編集・`.env` ファイル・秘密鍵・SSH キー・Git 認証情報の読み取りを明示的に禁止している。
 
 ## CI
 

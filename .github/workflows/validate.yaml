@@ -1,0 +1,103 @@
+name: Validate
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  validate:
+    name: Validate dotfiles structure
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      # ----------------------------------------------------------------
+      # 1. JSON 構文チェック
+      # ----------------------------------------------------------------
+      - name: Check JSON syntax
+        run: |
+          error=0
+          while IFS= read -r -d '' file; do
+            if ! python3 -m json.tool "$file" > /dev/null 2>&1; then
+              echo "::error file=$file::Invalid JSON: $file"
+              error=1
+            fi
+          done < <(find . -name "*.json" \
+            -not -path "./.git/*" \
+            -not -path "./node_modules/*" \
+            -print0)
+          exit "$error"
+
+      # ----------------------------------------------------------------
+      # 2. YAML 構文チェック
+      # ----------------------------------------------------------------
+      - name: Check YAML syntax
+        run: |
+          pip install --quiet pyyaml
+          error=0
+          while IFS= read -r -d '' file; do
+            if ! python3 -c "import yaml, sys; yaml.safe_load(open('$file'))" 2>/dev/null; then
+              echo "::error file=$file::Invalid YAML: $file"
+              error=1
+            fi
+          done < <(find . \( -name "*.yaml" -o -name "*.yml" \) \
+            -not -path "./.git/*" \
+            -not -path "./node_modules/*" \
+            -print0)
+          exit "$error"
+
+      # ----------------------------------------------------------------
+      # 3. link_map.yaml の整合性チェック（src ファイルが実在するか）
+      # ----------------------------------------------------------------
+      - name: Check link_map.yaml integrity
+        run: |
+          pip install --quiet pyyaml
+          python3 - <<'PYEOF'
+          import yaml, sys, os
+
+          link_map_path = ".config/link_map.yaml"
+          with open(link_map_path) as f:
+              data = yaml.safe_load(f)
+
+          errors = []
+          for category, entries in data.items():
+              # entries は dict (単一) または list (複数) のどちらか
+              if isinstance(entries, dict):
+                  entries = [entries]
+              if not isinstance(entries, list):
+                  continue
+              for entry in entries:
+                  if not isinstance(entry, dict):
+                      continue
+                  src = entry.get("src")
+                  if src and not os.path.exists(src):
+                      errors.append(f"[{category}] src not found: {src}")
+
+          if errors:
+              for e in errors:
+                  print(f"::error file={link_map_path}::{e}")
+              sys.exit(1)
+          else:
+              print(f"OK: all {sum(1 for c,e in data.items() for i in ([e] if isinstance(e, dict) else e if isinstance(e, list) else []) if isinstance(i, dict) and i.get('src')) } src entries exist.")
+          PYEOF
+
+      # ----------------------------------------------------------------
+      # 4. .claude/ 必須ファイルの存在チェック
+      # ----------------------------------------------------------------
+      - name: Check .claude/ required files
+        run: |
+          error=0
+          for file in .claude/settings.json; do
+            if [ ! -f "$file" ]; then
+              echo "::error::Required file missing: $file"
+              error=1
+            fi
+          done
+          exit "$error"
