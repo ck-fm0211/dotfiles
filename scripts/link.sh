@@ -101,7 +101,7 @@ create_symlink() {
       return
     fi
   elif [[ -e "$dst_full" ]]; then
-    warn "既存ファイルを上書きします: $dst_full（元ファイルのバックアップは make backup で行ってください）"
+    warn "既存ファイルを上書きします: ${dst_full}（元ファイルのバックアップは make backup で行ってください）"
     WARNINGS=$((WARNINGS+1))
   fi
 

@@ -154,7 +154,7 @@ if [ -d "$zsh_cache" ]; then
   if [ "$DRY_RUN" -eq 0 ]; then
     find "$zsh_cache" -name "zcompdump*" -type f -delete 2>/dev/null || true
     find "$zsh_cache" -name "zcompcache*" -type d -exec rm -rf {} + 2>/dev/null || true
-    success "Zsh: 補完キャッシュを削除（$zsh_cache）"
+    success "Zsh: 補完キャッシュを削除（${zsh_cache}）"
   else
     dry "Zsh: $zsh_cache の zcompdump/zcompcache を削除"
   fi

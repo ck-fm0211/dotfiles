@@ -38,9 +38,9 @@ if [[ "$(uname -s)" == "Darwin" ]]; then
   if [ "$macos_major" -ge 13 ]; then
     ok "macOS $macos_version"
   elif [ "$macos_major" -ge 12 ]; then
-    warn "macOS $macos_version（Monterey は非推奨。Ventura 以上を推奨）"
+    warn "macOS ${macos_version}（Monterey は非推奨。Ventura 以上を推奨）"
   else
-    fail "macOS $macos_version（サポート対象外。Ventura 以上が必要）"
+    fail "macOS ${macos_version}（サポート対象外。Ventura 以上が必要）"
   fi
   arch_type=$(uname -m)
   case "$arch_type" in
@@ -78,7 +78,7 @@ for dir in \
   if [ -d "$dir" ]; then
     ok "$dir"
   else
-    fail "$dir（make install で作成されます）"
+    fail "${dir}（make install で作成されます）"
   fi
 done
 
@@ -104,7 +104,7 @@ for entry in \
     version=$("$cmd" --version 2>/dev/null | head -1 || echo "")
     ok "$cmd${version:+ — $version}"
   else
-    fail "$cmd が未インストール（$desc）"
+    fail "$cmd が未インストール（${desc}）"
   fi
 done
 
@@ -131,7 +131,7 @@ for entry in \
   if command -v "$cmd" >/dev/null 2>&1; then
     ok "$cmd"
   else
-    warn "$cmd が未インストール（$desc）"
+    warn "$cmd が未インストール（${desc}）"
   fi
 done
 
@@ -147,7 +147,7 @@ for entry in \
     version=$("$cmd" --version 2>/dev/null | head -1 || echo "")
     ok "$cmd${version:+ — $version}"
   else
-    warn "$desc が未インストール（$install_cmd）"
+    warn "${desc}が未インストール（${install_cmd}）"
   fi
 done
 
@@ -176,7 +176,7 @@ fi
 if [ -n "$git_hooks" ]; then
   if [ -d "$git_hooks" ]; then
     hook_count=$(find "$git_hooks" -maxdepth 1 -type f -perm +111 2>/dev/null | wc -l | tr -d ' ')
-    ok "core.hooksPath: $git_hooks（$hook_count 件の実行可能フック）"
+    ok "core.hooksPath: ${git_hooks}（${hook_count}件の実行可能フック）"
   else
     warn "core.hooksPath が設定されていますがディレクトリが存在しません: $git_hooks"
   fi
@@ -192,7 +192,7 @@ if command -v mise >/dev/null 2>&1; then
     if [ -n "$version" ]; then
       ok "$tool: $version"
     else
-      warn "$tool: 未インストール（mise install $tool）"
+      warn "${tool}: 未インストール（mise install ${tool}）"
     fi
   done
 else
@@ -260,7 +260,7 @@ fi
 if command -v gh >/dev/null 2>&1; then
   if gh auth status >/dev/null 2>&1; then
     gh_user=$(gh api user --jq .login 2>/dev/null || echo "不明")
-    ok "GitHub CLI 認証済み（@$gh_user）"
+    ok "GitHub CLI 認証済み（@${gh_user}）"
   else
     warn "GitHub CLI が未認証（gh auth login を実行してください）"
   fi
