@@ -122,11 +122,11 @@ for app in $apps; do
   items=$(yq eval ".$app" "$LINK_MAP_FILE")
 
   if [[ $(yq eval 'type' <<< "$items") == "!!seq" ]]; then
-    for pair in $(echo "$items" | yq eval '.[] | @json' -); do
+    while IFS= read -r pair; do
       src=$(echo "$pair" | yq eval '.src' -)
       dst=$(echo "$pair" | yq eval '.dst' -)
       create_symlink "$src" "$dst"
-    done
+    done < <(echo "$items" | yq eval '.[] | @json' -)
   else
     src=$(yq eval '.src' <<< "$items")
     dst=$(yq eval '.dst' <<< "$items")

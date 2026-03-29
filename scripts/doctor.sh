@@ -240,9 +240,9 @@ else
       fi
     }
     if [[ $(yq eval 'type' <<< "$items") == "!!seq" ]]; then
-      for pair in $(echo "$items" | yq eval '.[] | @json' -); do
+      while IFS= read -r pair; do
         check_link "$(echo "$pair" | yq eval '.src' -)" "$(echo "$pair" | yq eval '.dst' -)"
-      done
+      done < <(echo "$items" | yq eval '.[] | @json' -)
     else
       check_link "$(yq eval '.src' <<< "$items")" "$(yq eval '.dst' <<< "$items")"
     fi

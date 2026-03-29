@@ -103,10 +103,10 @@ apps=$(yq eval 'keys | .[]' "$LINK_MAP")
 for app in $apps; do
   items=$(yq eval ".$app" "$LINK_MAP")
   if [[ $(yq eval 'type' <<< "$items") == "!!seq" ]]; then
-    for pair in $(echo "$items" | yq eval '.[] | @json' -); do
+    while IFS= read -r pair; do
       dst=$(echo "$pair" | yq eval '.dst' -)
       remove_symlink "$dst"
-    done
+    done < <(echo "$items" | yq eval '.[] | @json' -)
   else
     dst=$(yq eval '.dst' <<< "$items")
     remove_symlink "$dst"
