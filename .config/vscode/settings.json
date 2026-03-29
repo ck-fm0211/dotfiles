@@ -88,4 +88,5 @@
     "markdown": true,
     "scminput": false
   },
+  "claudeCode.preferredLocation": "panel",
 }
