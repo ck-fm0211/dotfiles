@@ -7,6 +7,51 @@
       "Bash(sheldon:*)",
       "Bash(mise:*)"
     ],
-    "deny": []
+    "deny": [
+      "Bash(rm *)",
+      "Bash(rm -r *)",
+      "Bash(rm -rf *)",
+      "Bash(rm -fr *)",
+      "Bash(rmdir *)",
+      "Bash(unlink *)",
+      "Bash(shred *)",
+      "Bash(find * -delete*)",
+      "Bash(rsync * --delete*)",
+      "Bash(sudo *)",
+      "Bash(su *)",
+      "Bash(curl *)",
+      "Bash(wget *)",
+      "Read(/.env)",
+      "Edit(/.env)",
+      "Write(/.env)",
+      "Read(/.env.*)",
+      "Edit(/.env.*)",
+      "Write(/.env.*)",
+      "Read(/secrets/**)",
+      "Edit(/secrets/**)",
+      "Write(/secrets/**)",
+      "Read(~/.ssh/**)",
+      "Read(~/.git-credentials)",
+      "Read(~/.config/gh/**)",
+      "Edit(~/.config/zsh/.zshrc)",
+      "Write(~/.config/zsh/.zshrc)",
+      "Edit(~/.bashrc)",
+      "Write(~/.bashrc)"
+    ]
+  },
+  "extraKnownMarketplaces": {
+    "claude-code-harness-marketplace": {
+      "source": {
+        "source": "github",
+        "repo": "Chachamaru127/claude-code-harness"
+      }
+    }
+  },
+  "sandbox": {
+    "enabled": true,
+    "autoAllowBashIfSandboxed": false
+  },
+  "enabledPlugins": {
+    "claude-code-harness@claude-code-harness-marketplace": true
   }
 }

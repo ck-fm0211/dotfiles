@@ -99,3 +99,6 @@ claude_code:
   -
     src: .config/claude/CLAUDE.md
     dst: .config/claude/CLAUDE.md
+  -
+    src: .config/claude/agents/code-reviewer.md
+    dst: .config/claude/agents/code-reviewer.md
