@@ -22,7 +22,6 @@ PASS=0; FAIL=0; WARN=0
 ok()      { echo "  ${GREEN}✓${RESET} $*"; PASS=$((PASS+1)); }
 fail()    { echo "  ${RED}✗${RESET} $*"; FAIL=$((FAIL+1)); }
 warn()    { echo "  ${YELLOW}!${RESET} $*"; WARN=$((WARN+1)); }
-info()    { echo "  ${CYAN}i${RESET} $*"; }
 section() {
   echo
   echo "${BOLD}${CYAN}■ $*${RESET}"
