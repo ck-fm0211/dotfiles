@@ -32,6 +32,7 @@ jobs:
           done < <(find . -name "*.json" \
             -not -path "./.git/*" \
             -not -path "./node_modules/*" \
+            -not -path "./.config/vscode/*" \
             -print0)
           exit "$error"
 
