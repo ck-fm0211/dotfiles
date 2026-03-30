@@ -68,6 +68,9 @@ jobs:
       - name: Initialize sheldon
         run: make sheldon
 
+      - name: Install mise-managed tools (node, python, go, terraform)
+        run: make mise-install
+
       - name: Apply macOS defaults
         run: make mac-defaults
 
