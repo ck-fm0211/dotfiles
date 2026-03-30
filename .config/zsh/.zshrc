@@ -16,8 +16,15 @@ export HISTSIZE=10000
 # ヒストリファイルに保存するコマンド数
 export SAVEHIST=10000
 
+# Homebrew PATH ブートストラップ（sheldon を起動する前に必要）
+if [[ -x /opt/homebrew/bin/brew ]]; then
+  eval "$(/opt/homebrew/bin/brew shellenv)"
+elif [[ -x /usr/local/bin/brew ]]; then
+  eval "$(/usr/local/bin/brew shellenv)"
+fi
+
 # sheldon
-eval "$(sheldon source)"
+command -v sheldon &>/dev/null && eval "$(sheldon source)"
 
 # gcloud
 # shellcheck disable=SC1091
