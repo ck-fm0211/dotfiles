@@ -275,7 +275,7 @@ if command -v sheldon >/dev/null 2>&1; then
   else
     warn "sheldon データディレクトリが存在しません（make sheldon を実行してください）"
   fi
-  lock_file="${XDG_CONFIG_HOME:-$HOME/.config}/sheldon/plugins.lock"
+  lock_file="${XDG_DATA_HOME:-$HOME/.local/share}/sheldon/plugins.lock"
   if [ -f "$lock_file" ]; then
     ok "plugins.lock が存在します"
   else
