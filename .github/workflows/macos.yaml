@@ -75,10 +75,23 @@ jobs:
         run: make install-awscli
 
       - name: Install Google Cloud SDK
-        run: make install-gcloud
+        run: |
+          make install-gcloud
+          echo "$HOME/google-cloud-sdk/bin" >> "$GITHUB_PATH"
 
       - name: Install Claude Code
-        run: make install-claude-code
+        run: |
+          make install-claude-code
+          echo "$HOME/.local/bin" >> "$GITHUB_PATH"
+
+      - name: Configure Git for CI
+        run: |
+          git config --global user.name "GitHub Actions"
+          git config --global user.email "actions@github.com"
+          git config --global init.defaultBranch main
+
+      - name: Configure Git hooks
+        run: make git-hooks
 
       - name: Run doctor (environment health check)
         run: make doctor || true  # 警告があっても CI は継続

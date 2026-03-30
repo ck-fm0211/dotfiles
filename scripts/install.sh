@@ -10,6 +10,7 @@ fi
 # ----- XDG Base Directory -----
 echo ">>> Creating XDG directories..."
 mkdir -p "$HOME/.config" "$HOME/.cache" "$HOME/.local/share" "$HOME/.local/state"
+mkdir -p "$HOME/.cache/zsh" "$HOME/.local/state/zsh" "$HOME/.local/state/less" "$HOME/.local/state/python"
 
 # ZDOTDIR を /etc/zshenv に設定（未設定の場合のみ追加）
 if ! grep -q "ZDOTDIR" /etc/zshenv 2>/dev/null; then
