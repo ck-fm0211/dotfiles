@@ -151,7 +151,7 @@ clean-dry: ## クリーンアップの対象を表示するだけ（実際には
 
 .PHONY: git-hooks
 git-hooks: ## グローバル Git フック（core.hooksPath）を設定する
-	git config --global core.hooksPath "$$HOME/.config/git/hooks"
+	git config --global core.hooksPath '~/.config/git/hooks'
 	@echo "  ✓ core.hooksPath = $$(git config --global core.hooksPath)"
 	@echo "  ✓ Conventional Commits フックが有効になりました"
 
