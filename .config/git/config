@@ -57,8 +57,5 @@
 [rerere]
 	# コンフリクト解決を記憶して再利用
 	enabled = true
-[branch]
-	# 新しいブランチはデフォルトでリベース設定
-	autosetuprebase = always
 [color]
 	ui = auto

@@ -1,6 +1,5 @@
 # macOS
 .DS_Store
-<<<<<<< HEAD
 .DS_Store?
 ._*
 .Spotlight-V100
@@ -53,8 +52,6 @@ logs/
 # OS generated
 Thumbs.db
 ehthumbs.db
-=======
 **/__pycache__/**
 
 **/.claude/settings.local.json
->>>>>>> origin/main
