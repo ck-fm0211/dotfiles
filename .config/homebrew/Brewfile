@@ -1,23 +1,47 @@
-brew "bat"
-brew "brew-cask-completion"
-brew "colordiff"
-brew "coreutils"
-brew "curl"
-brew "eza"
-brew "gawk"
-brew "git"
-brew "gnu-sed"
-brew "gnupg"
-brew "jq"
-brew "mas"
-brew "mise"
-brew "peco"
-brew "sheldon"
-brew "shellcheck"
-brew "tnftp"
-brew "tree"
-brew "xdg-ninja"
-brew "yq"
+# ============================================================
+# Core CLI Tools
+# ============================================================
+brew "bat"               # cat の代替（シンタックスハイライト）
+brew "colordiff"         # diff の代替（カラー表示）
+brew "coreutils"         # GNU コアユーティリティ（gdate 等）
+brew "curl"              # データ転送ツール
+brew "eza"               # ls の代替（Git 連携・カラー表示）
+brew "fd"                # find の代替（高速・直感的）
+brew "fzf"               # ファジーファインダー
+brew "gawk"              # GNU awk
+brew "git"               # バージョン管理
+brew "git-lfs"           # Git Large File Storage
+brew "gnu-sed"           # GNU sed
+brew "gnupg"             # GPG 暗号化ツール
+brew "jq"                # JSON パーサー / プロセッサー
+brew "mas"               # Mac App Store CLI
+brew "peco"              # インタラクティブフィルター
+brew "ripgrep"           # grep の代替（高速全文検索）
+brew "sheldon"           # Zsh プラグインマネージャー
+brew "shellcheck"        # シェルスクリプト静的解析
+brew "tldr"              # シンプルな man ページ（コミュニティ版）
+brew "tree"              # ディレクトリツリー表示
+brew "watch"             # コマンドを定期実行
+brew "wget"              # ファイルダウンロード
+brew "xdg-ninja"         # XDG 準拠チェック
+
+# ============================================================
+# Development Tools
+# ============================================================
+brew "brew-cask-completion"  # Homebrew Cask の zsh 補完
+brew "gh"                    # GitHub CLI
+brew "mise"                  # ランタイムバージョンマネージャー
+brew "tnftp"                 # FTP クライアント
+brew "yq"                    # YAML / JSON / TOML パーサー
+
+# ============================================================
+# Networking / Utilities
+# ============================================================
+brew "htop"              # インタラクティブなプロセスビューア
+
+# ============================================================
+# Shell Plugins（sheldon 経由でも管理されるが念のため）
+# ============================================================
 brew "zsh-autosuggestions"
 brew "zsh-completions"
 brew "zsh-syntax-highlighting"

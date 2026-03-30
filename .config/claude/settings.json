@@ -1,5 +1,12 @@
 {
   "permissions": {
+    "allow": [
+      "Bash(git:*)",
+      "Bash(make:*)",
+      "Bash(brew:*)",
+      "Bash(sheldon:*)",
+      "Bash(mise:*)"
+    ],
     "deny": [
       "Bash(rm *)",
       "Bash(rm -r *)",

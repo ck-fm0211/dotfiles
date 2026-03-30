@@ -11,8 +11,51 @@
 	br = branch
 	st = status
 	sw = switch
+	# ログをきれいに表示
+	lg = log --oneline --graph --decorate --all
+	# 直前のコミットを修正（メッセージのみ）
+	amend = commit --amend --no-edit
+	# リモートから削除済みブランチをローカルでも削除
+	prune-branches = fetch --prune
+	# 変更ファイル一覧
+	changed = diff --name-only
+	# ステージ済み変更一覧
+	staged = diff --cached --name-only
+	# 直前のコミットを取り消し（変更はステージに残す）
+	undo = reset --soft HEAD~1
 [core]
 	editor = code --wait
 	pager = less -F -X
+	# 日本語ファイル名を正しく表示
+	quotepath = false
+	# 末尾の空白を警告
+	whitespace = trailing-space,space-before-tab
+	# グローバル Git フック（Conventional Commits 検証など）
+	hooksPath = ~/.config/git/hooks
 [init]
 	defaultBranch = main
+[pull]
+	# fast-forward のみ許可（意図しないマージコミットを防ぐ）
+	rebase = false
+	ff = only
+[push]
+	# 現在のブランチと同名のリモートブランチにのみ push
+	default = current
+	autoSetupRemote = true
+[fetch]
+	# リモートで削除されたブランチを自動的に追跡解除
+	prune = true
+[diff]
+	# より読みやすい diff アルゴリズム
+	algorithm = histogram
+[merge]
+	# マージコミットに差分サマリを含める
+	log = true
+[rebase]
+	# リベース時に autostash を有効化（ダーティな作業ツリーでも rebase 可能）
+	autostash = true
+[rerere]
+	# コンフリクト解決を記憶して再利用
+	enabled = true
+[color]
+	ui = auto
