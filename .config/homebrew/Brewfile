@@ -45,3 +45,10 @@ brew "htop"              # インタラクティブなプロセスビューア
 brew "zsh-autosuggestions"
 brew "zsh-completions"
 brew "zsh-syntax-highlighting"
+
+# newly added (2026-03-31)
+brew "ffmpeg"
+brew "parallel"
+brew "qpdf"
+brew "tesseract"
+brew "tesseract-lang"
