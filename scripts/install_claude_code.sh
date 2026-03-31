@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -e
+set -euo pipefail
 
 # 1. XDG変数のフォールバック（未定義の場合はデフォルト値を使用）
 export XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-$HOME/.config}"

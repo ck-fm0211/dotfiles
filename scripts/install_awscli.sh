@@ -4,7 +4,8 @@
 
 set -euo pipefail
 
-PKG_PATH="/tmp/AWSCLIV2.pkg"
+PKG_PATH=$(mktemp /tmp/AWSCLIV2.XXXXXX.pkg)
+trap 'rm -f "$PKG_PATH"' EXIT
 
 # すでにインストール済みか確認
 if command -v aws >/dev/null 2>&1; then
@@ -17,8 +18,5 @@ curl --retry 3 --retry-delay 2 -fsSL "https://awscli.amazonaws.com/AWSCLIV2.pkg"
 
 echo ">>> インストールしています..."
 sudo installer -pkg "$PKG_PATH" -target /
-
-# 一時ファイルを削除
-rm -f "$PKG_PATH"
 
 echo ">>> インストール完了: $(aws --version)"
