@@ -137,6 +137,10 @@ uninstall-claude-code: ## Claude Code をアンインストール
 mcp-setup: ## MCPサーバーをClaude Codeにグローバル登録
 	./scripts/mcp_setup.sh
 
+.PHONY: mcp-dump
+mcp-dump: ## 現在登録済みのMCPサーバーをmcp-servers.jsonにエクスポート
+	./scripts/mcp_dump.sh
+
 # ============================================================
 # 診断・メンテナンス
 # ============================================================
