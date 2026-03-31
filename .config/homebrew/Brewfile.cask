@@ -25,3 +25,6 @@ cask "zoom"
 
 # newly added (2026-03-31)
 cask "kiro"
+
+# newly added (2026-04-01)
+cask "codex"
