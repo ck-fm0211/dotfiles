@@ -241,7 +241,9 @@ timer() {
   echo "${seconds}秒後に通知します: $message"
   sleep "$seconds"
   if [[ "$OSTYPE" == darwin* ]]; then
-    osascript -e "display notification \"$message\" with title \"タイマー\"" 2>/dev/null || echo "$message"
+    local escaped_message
+    escaped_message="${message//\"/\\\"}"
+    osascript -e "display notification \"${escaped_message}\" with title \"タイマー\"" 2>/dev/null || echo "$message"
   else
     echo "$message"
   fi

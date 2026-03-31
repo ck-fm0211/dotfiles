@@ -81,12 +81,15 @@ github = "romkatv/powerlevel10k"
 
 # Apple Silicon / Intel 両対応
 # /opt/homebrew (Apple Silicon) または /usr/local (Intel) を自動判定
+# .zshrc で先行評価済みの場合は重複実行をスキップ
 [plugins.homebrew]
 inline = '''
-if [[ -x /opt/homebrew/bin/brew ]]; then
-  eval "$(/opt/homebrew/bin/brew shellenv)"
-elif [[ -x /usr/local/bin/brew ]]; then
-  eval "$(/usr/local/bin/brew shellenv)"
+if ! command -v brew >/dev/null 2>&1; then
+  if [[ -x /opt/homebrew/bin/brew ]]; then
+    eval "$(/opt/homebrew/bin/brew shellenv)"
+  elif [[ -x /usr/local/bin/brew ]]; then
+    eval "$(/usr/local/bin/brew shellenv)"
+  fi
 fi
 '''
 
