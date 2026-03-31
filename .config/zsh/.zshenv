@@ -28,7 +28,7 @@ export LESSHISTFILE="$XDG_STATE_HOME/less/history"
 export LESS="-R --use-color"
 
 # ----- Python -----
-export PYTHONSTARTUP="$HOME/python/pythonrc"
+export PYTHONSTARTUP="$XDG_CONFIG_HOME/python/pythonrc"
 export PYTHONPYCACHEPREFIX="$XDG_CACHE_HOME/python"
 export PYTHONUSERBASE="$XDG_DATA_HOME/python"
 

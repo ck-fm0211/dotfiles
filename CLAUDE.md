@@ -13,7 +13,7 @@ make help              # 利用可能なコマンド一覧を表示
 
 # セットアップ
 make bootstrap         # 新規 Mac 向け: Homebrew 未インストール状態から一発セットアップ（bootstrap.sh を実行）
-make setup             # フルセットアップ: install → link → brew-bundle-taps → brew-bundle → brew-bundle-cask → brew-bundle-vscode → sheldon → mac-defaults → git-hooks → install-awscli → install-gcloud → install-claude-code
+make setup             # フルセットアップ: install → brew-bundle-taps → brew-bundle → brew-bundle-cask → brew-bundle-vscode → sheldon → link → mise-install → mac-defaults → git-hooks → install-awscli → install-gcloud → install-claude-code → mcp-setup
 make link              # link_map.yaml からシンボリックリンクを作成
 make link-dry          # シンボリックリンクの変更プレビュー（書き込みなし）
 make unlink            # link.sh が作成したシンボリックリンクをすべて削除
@@ -80,9 +80,9 @@ make clean-dry         # 削除対象のプレビュー
 
 ## CI
 
-[.github/workflows/macos.yaml](.github/workflows/macos.yaml) は push および PR ごとに 2 つのジョブを順番に実行する:
+[.github/workflows/macos.yaml](.github/workflows/macos.yaml) は push および PR ごとに 2 つのジョブを**並列**で実行する:
 1. **shellcheck** (Ubuntu) — `scripts/` 配下のシェルスクリプトの構文チェック
-2. **macOS Setup Test** — shellcheck 成功後、macOS 上でフルセットアップをエンドツーエンドで実行（`make doctor`・`make shellcheck` も含む）
+2. **macOS Setup Test** — macOS 上でフルセットアップをエンドツーエンドで実行（`make doctor`・`make shellcheck` も含む）
 
 スクリプト変更をプッシュする前に `make shellcheck` をローカルで実行すること。
 

@@ -18,7 +18,7 @@ go = "latest"
 terraform = "latest"
 
 [settings]
-# バージョンが見つからない場合に自動インストール
+# ダウンロード済みアーカイブをインストール後も保持するか（false = 削除してディスク節約）
 always_keep_download = false
 # プラグインの自動更新
 plugin_autoupdate_last_check_duration = "1 week"
