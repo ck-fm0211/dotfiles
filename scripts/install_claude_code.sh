@@ -34,9 +34,15 @@ else
     echo "$CLAUDE_CONFIG" >> "$ZSHENV_PATH"
 fi
 
-# 4. 環境変数が適用された状態でインストーラを実行する
+# 4. npm 経由で Claude Code をインストールする
+if ! command -v npm >/dev/null 2>&1; then
+  echo "npm が見つかりません。Claude Code のインストールには Node.js と npm が必要です。" >&2
+  echo "mise 経由で Node.js を有効化してから再実行してください。" >&2
+  exit 1
+fi
+
 echo "Claude Codeをインストールしています..."
-curl -fsSL https://claude.ai/install.sh | bash
+npm install -g @anthropic-ai/claude-code
 
 echo "==========================================="
 echo "Claude Codeのインストールが完了しました。"

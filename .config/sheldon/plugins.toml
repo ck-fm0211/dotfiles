@@ -73,7 +73,9 @@ github = "hlissner/zsh-autopair"
 apply = ['defer']
 
 [plugins.kubectl-completion]
-remote = "https://raw.githubusercontent.com/nnao45/zsh-kubectl-completion/master/_kubectl"
+# `git ls-remote https://github.com/nnao45/zsh-kubectl-completion HEAD` で更新確認する。
+# この環境では GitHub への名前解決ができないため、`master` 追従はやめて取得できた最新公開タグで固定する。
+remote = "https://raw.githubusercontent.com/nnao45/zsh-kubectl-completion/v0.1.12/_kubectl"
 apply = ["defer"]
 
 [plugins.powerlevel10k]

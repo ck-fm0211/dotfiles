@@ -3,9 +3,12 @@
 	process = git-lfs filter-process
 	required = true
 	clean = git-lfs clean -- %f
-[user]
-	name = ck-fm0211
-	email = 17825200+ck-fm0211@users.noreply.github.com
+[include]
+	# `~/.config/git/config.local` は管理対象外。初回セットアップ時に手動で作成する。
+	# `git config --global user.name "..."`
+	# `git config --global user.email "..."`
+	# でも設定可能だが、XDG 管理方針に従い `~/.config/git/config.local` を推奨する。
+	path = ~/.config/git/config.local
 [alias]
 	co = checkout
 	br = branch

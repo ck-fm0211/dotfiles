@@ -3,8 +3,12 @@ set -euo pipefail
 
 # ----- Rosetta (Apple Silicon のみ) -----
 if [[ "$(uname -m)" == "arm64" ]]; then
-  echo ">>> Installing Rosetta..."
-  /usr/sbin/softwareupdate --install-rosetta --agree-to-license
+  if pkgutil --pkg-info=com.apple.pkg.RosettaUpdateAuto > /dev/null 2>&1; then
+    echo ">>> Rosetta is already installed. Skipping."
+  else
+    echo ">>> Installing Rosetta..."
+    /usr/sbin/softwareupdate --install-rosetta --agree-to-license
+  fi
 fi
 
 # ----- XDG Base Directory -----
@@ -20,7 +24,6 @@ chmod 700 "$HOME/.local/share/gnupg"
 # ZDOTDIR を /etc/zshenv に設定（未設定の場合のみ追加）
 if ! grep -q "ZDOTDIR" /etc/zshenv 2>/dev/null; then
   echo "export ZDOTDIR=$HOME/.config/zsh" | sudo tee -a /etc/zshenv
-  sudo chmod 444 /etc/zshenv
 fi
 
 # ----- Homebrew -----
@@ -37,13 +40,6 @@ else
 fi
 
 mkdir -p "$HOME/.config/zsh"
-
-# shellcheck disable=SC2016
-BREW_SHELLENV='eval "$('$BREW_PREFIX'/bin/brew shellenv)"'
-if ! grep -qF "$BREW_SHELLENV" "$HOME/.config/zsh/.zshrc" 2>/dev/null; then
-  echo >> "$HOME/.config/zsh/.zshrc"
-  echo "$BREW_SHELLENV" >> "$HOME/.config/zsh/.zshrc"
-fi
 
 # shellcheck disable=SC2016
 eval "$($BREW_PREFIX/bin/brew shellenv)"
