@@ -4,8 +4,33 @@
 
 set -euo pipefail
 
-GCLOUD_VERSION="${GCLOUD_VERSION:-524.0.0}"
+GCLOUD_VERSION="${GCLOUD_VERSION:-}"
 INSTALL_DIR="${HOME}/google-cloud-sdk"
+
+resolve_gcloud_version() {
+  local metadata_url version
+
+  if [ -n "${GCLOUD_VERSION}" ]; then
+    printf '%s\n' "${GCLOUD_VERSION}"
+    return 0
+  fi
+
+  metadata_url="https://dl.google.com/dl/cloudsdk/channels/rapid/components-2.json"
+
+  echo ">>> Google Cloud CLI の最新バージョンを解決しています..." >&2
+  version="$(
+    curl -fsSL "${metadata_url}" \
+      | python3 -c 'import json, sys; data = json.load(sys.stdin); print(data.get("version", ""))'
+  )"
+
+  if [ -z "${version}" ]; then
+    echo "Google Cloud CLI の最新バージョンを取得できませんでした。" >&2
+    echo "必要であれば GCLOUD_VERSION を明示的に指定してください。" >&2
+    exit 1
+  fi
+
+  printf '%s\n' "${version}"
+}
 
 # すでにインストール済みか確認
 if command -v gcloud >/dev/null 2>&1; then
@@ -27,6 +52,8 @@ case "$(arch)" in
     ;;
 esac
 
+GCLOUD_VERSION="$(resolve_gcloud_version)"
+
 archive_name="google-cloud-cli-${GCLOUD_VERSION}-${archive_arch}.tar.gz"
 archive_url="https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/${archive_name}"
 checksum_url="${archive_url}.sha256"
@@ -46,6 +73,7 @@ if [ -d "${INSTALL_DIR}" ]; then
 fi
 
 echo ">>> Google Cloud SDK ${GCLOUD_VERSION} をダウンロードしています..."
+curl -fsSI "${archive_url}" >/dev/null
 curl -fsSL -o "${archive_path}" "${archive_url}"
 curl -fsSL -o "${checksum_path}" "${checksum_url}"
 
