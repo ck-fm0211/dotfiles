@@ -42,6 +42,8 @@ sheldon: ## sheldon（Zsh プラグインマネージャー）を初期化
 .PHONY: mise-install
 mise-install: ## mise で管理するツール（node・python・go・terraform）をインストール
 	@echo ">>> Node.js GPG 署名検証キーをインポートしています..."
+	@# keyboxd のバージョン不一致を防ぐため、古いデーモンを終了させる
+	@gpgconf --kill keyboxd 2>/dev/null || true
 	@# Node.js リリースチームのキーを openpgp.org から取得（失敗時は ubuntu keyserver にフォールバック）
 	@gpg --keyserver hkps://keys.openpgp.org --recv-keys \
 	  C0D6248439F1D5604AAFFB4021D900FFDB233756 \
