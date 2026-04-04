@@ -203,7 +203,7 @@ fi
 # ----------- Homebrew パッケージ -----------
 section "Homebrew パッケージ"
 if command -v brew >/dev/null 2>&1; then
-  for brewfile_name in Brewfile Brewfile.cask; do
+  for brewfile_name in Brewfile Brewfile.taps Brewfile.cask Brewfile.vscode; do
     file="$BASE_DIR/.config/homebrew/$brewfile_name"
     if [ -f "$file" ]; then
       if brew bundle check --file="$file" --quiet 2>/dev/null; then
