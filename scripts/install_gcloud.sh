@@ -7,29 +7,22 @@ set -euo pipefail
 GCLOUD_VERSION="${GCLOUD_VERSION:-}"
 INSTALL_DIR="${HOME}/google-cloud-sdk"
 
-resolve_gcloud_version() {
-  local metadata_url version
+build_archive_urls() {
+  local archive_arch archive_name archive_url checksum_url
+
+  archive_arch="$1"
 
   if [ -n "${GCLOUD_VERSION}" ]; then
-    printf '%s\n' "${GCLOUD_VERSION}"
-    return 0
+    archive_name="google-cloud-cli-${GCLOUD_VERSION}-${archive_arch}.tar.gz"
+    archive_url="https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/${archive_name}"
+  else
+    archive_name="google-cloud-cli-${archive_arch}.tar.gz"
+    archive_url="https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/${archive_name}"
   fi
 
-  metadata_url="https://dl.google.com/dl/cloudsdk/channels/rapid/components-2.json"
+  checksum_url="${archive_url}.sha256"
 
-  echo ">>> Google Cloud CLI の最新バージョンを解決しています..." >&2
-  version="$(
-    curl -fsSL "${metadata_url}" \
-      | python3 -c 'import json, sys; data = json.load(sys.stdin); print(data.get("version", ""))'
-  )"
-
-  if [ -z "${version}" ]; then
-    echo "Google Cloud CLI の最新バージョンを取得できませんでした。" >&2
-    echo "必要であれば GCLOUD_VERSION を明示的に指定してください。" >&2
-    exit 1
-  fi
-
-  printf '%s\n' "${version}"
+  printf '%s\n%s\n%s\n' "${archive_name}" "${archive_url}" "${checksum_url}"
 }
 
 # すでにインストール済みか確認
@@ -41,7 +34,7 @@ fi
 
 case "$(arch)" in
   arm64)
-    archive_arch="darwin-arm64"
+    archive_arch="darwin-arm"
     ;;
   i386|x86_64)
     archive_arch="darwin-x86_64"
@@ -52,11 +45,10 @@ case "$(arch)" in
     ;;
 esac
 
-GCLOUD_VERSION="$(resolve_gcloud_version)"
-
-archive_name="google-cloud-cli-${GCLOUD_VERSION}-${archive_arch}.tar.gz"
-archive_url="https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/${archive_name}"
-checksum_url="${archive_url}.sha256"
+mapfile -t archive_info < <(build_archive_urls "${archive_arch}")
+archive_name="${archive_info[0]}"
+archive_url="${archive_info[1]}"
+checksum_url="${archive_info[2]}"
 tmp_dir="$(mktemp -d)"
 archive_path="${tmp_dir}/${archive_name}"
 checksum_path="${archive_path}.sha256"
@@ -72,7 +64,12 @@ if [ -d "${INSTALL_DIR}" ]; then
   exit 1
 fi
 
-echo ">>> Google Cloud SDK ${GCLOUD_VERSION} をダウンロードしています..."
+if [ -n "${GCLOUD_VERSION}" ]; then
+  echo ">>> Google Cloud SDK ${GCLOUD_VERSION} をダウンロードしています..."
+else
+  echo ">>> Google Cloud SDK の最新版をダウンロードしています..."
+fi
+
 curl -fsSI "${archive_url}" >/dev/null
 curl -fsSL -o "${archive_path}" "${archive_url}"
 curl -fsSL -o "${checksum_path}" "${checksum_url}"
