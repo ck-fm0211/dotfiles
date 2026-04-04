@@ -5,17 +5,21 @@
 # バージョンをオーバーライドできる。
 
 [tools]
-# Node.js: LTS を常に使用
-node = "lts"
+# バージョン更新時は `mise ls-remote <tool>` で最新安定版を確認し、
+# このファイルのメジャー/マイナーバージョンを明示的に更新する。
+# 例: `mise ls-remote node`, `mise ls-remote python`, `mise ls-remote go`, `mise ls-remote terraform`
 
-# Python: 最新安定版
-python = "latest"
+# Node.js 22 LTS
+node = "22"
 
-# Go: 最新安定版
-go = "latest"
+# Python 3.13
+python = "3.13"
 
-# Terraform
-terraform = "latest"
+# Go 1.24
+go = "1.24"
+
+# Terraform 1.10
+terraform = "1.10"
 
 [settings]
 # ダウンロード済みアーカイブをインストール後も保持するか（false = 削除してディスク節約）
