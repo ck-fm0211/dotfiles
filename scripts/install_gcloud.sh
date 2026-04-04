@@ -7,24 +7,6 @@ set -euo pipefail
 GCLOUD_VERSION="${GCLOUD_VERSION:-}"
 INSTALL_DIR="${HOME}/google-cloud-sdk"
 
-build_archive_urls() {
-  local archive_arch archive_name archive_url checksum_url
-
-  archive_arch="$1"
-
-  if [ -n "${GCLOUD_VERSION}" ]; then
-    archive_name="google-cloud-cli-${GCLOUD_VERSION}-${archive_arch}.tar.gz"
-    archive_url="https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/${archive_name}"
-  else
-    archive_name="google-cloud-cli-${archive_arch}.tar.gz"
-    archive_url="https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/${archive_name}"
-  fi
-
-  checksum_url="${archive_url}.sha256"
-
-  printf '%s\n%s\n%s\n' "${archive_name}" "${archive_url}" "${checksum_url}"
-}
-
 # すでにインストール済みか確認
 if command -v gcloud >/dev/null 2>&1; then
   echo "Google Cloud SDK はすでにインストールされています: $(gcloud --version | head -1)"
@@ -45,10 +27,14 @@ case "$(arch)" in
     ;;
 esac
 
-mapfile -t archive_info < <(build_archive_urls "${archive_arch}")
-archive_name="${archive_info[0]}"
-archive_url="${archive_info[1]}"
-checksum_url="${archive_info[2]}"
+if [ -n "${GCLOUD_VERSION}" ]; then
+  archive_name="google-cloud-cli-${GCLOUD_VERSION}-${archive_arch}.tar.gz"
+else
+  archive_name="google-cloud-cli-${archive_arch}.tar.gz"
+fi
+archive_url="https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/${archive_name}"
+checksum_url="${archive_url}.sha256"
+
 tmp_dir="$(mktemp -d)"
 archive_path="${tmp_dir}/${archive_name}"
 checksum_path="${archive_path}.sha256"
