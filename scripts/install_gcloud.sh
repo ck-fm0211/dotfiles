@@ -56,7 +56,6 @@ else
   echo ">>> Google Cloud SDK の最新版をダウンロードしています..."
 fi
 
-curl -fsSI "${archive_url}" >/dev/null
 curl -fsSL -o "${archive_path}" "${archive_url}"
 curl -fsSL -o "${checksum_path}" "${checksum_url}"
 
