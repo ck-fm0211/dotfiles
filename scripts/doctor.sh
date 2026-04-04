@@ -176,7 +176,7 @@ if [ -n "$git_hooks" ]; then
   # ~ はクォート内で展開されないため $HOME に置換して評価する
   git_hooks_expanded="${git_hooks/#\~/$HOME}"
   if [ -d "$git_hooks_expanded" ]; then
-    hook_count=$(find "$git_hooks_expanded" -maxdepth 1 -type f -perm /111 2>/dev/null | wc -l | tr -d ' ')
+    hook_count=$(find "$git_hooks_expanded" -maxdepth 1 -type f -perm /111 2>/dev/null | wc -l | tr -d ' ' || echo "0")
     ok "core.hooksPath: ${git_hooks}（${hook_count}件の実行可能フック）"
   else
     warn "core.hooksPath が設定されていますがディレクトリが存在しません: $git_hooks"
