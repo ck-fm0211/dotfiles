@@ -25,7 +25,7 @@
 
 - [ ] `make doctor` でエラーがないことを確認した
 - [ ] `make link-dry` でシンボリックリンクの変更を確認した
-- [ ] `shellcheck scripts/*.sh .config/zsh/*.zsh` を実行した
+- [ ] `make shellcheck` を実行した
 - [ ] 新規 Mac（またはクリーンな環境）でテストした
 
 ## スクリーンショット / ログ
