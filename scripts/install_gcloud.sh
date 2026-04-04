@@ -1,11 +1,11 @@
 #!/bin/bash
 # install_gcloud.sh - Google Cloud SDK のインストール
-# 参考: https://cloud.google.com/sdk/docs/downloads-interactive?hl=ja
+# 参考: https://cloud.google.com/sdk/docs/install
 
 set -euo pipefail
 
-GCLOUD_VERSION="${GCLOUD_VERSION:-}"
 INSTALL_DIR="${HOME}/google-cloud-sdk"
+BASE_URL="https://dl.google.com/dl/cloudsdk/channels/rapid/downloads"
 
 # すでにインストール済みか確認
 if command -v gcloud >/dev/null 2>&1; then
@@ -14,34 +14,43 @@ if command -v gcloud >/dev/null 2>&1; then
   exit 0
 fi
 
-case "$(arch)" in
+# アーキテクチャ判定 (uname -m の方が arch より一貫している)
+# macOS: arm64 = Apple Silicon, x86_64 = Intel
+case "$(uname -m)" in
   arm64)
     archive_arch="darwin-arm"
     ;;
-  i386|x86_64)
+  x86_64)
     archive_arch="darwin-x86_64"
     ;;
   *)
-    echo "未対応のアーキテクチャです: $(arch)" >&2
+    echo "未対応のアーキテクチャです: $(uname -m)" >&2
     exit 1
     ;;
 esac
 
-if [ -n "${GCLOUD_VERSION}" ]; then
-  archive_name="google-cloud-cli-${GCLOUD_VERSION}-${archive_arch}.tar.gz"
+# バージョン取得: 環境変数優先、なければ components-2.json から動的取得
+if [ -n "${GCLOUD_VERSION:-}" ]; then
+  version="${GCLOUD_VERSION}"
 else
-  archive_name="google-cloud-cli-${archive_arch}.tar.gz"
+  echo ">>> Google Cloud CLI の最新バージョンを取得しています..."
+  version="$(curl -fsSL "https://dl.google.com/dl/cloudsdk/channels/rapid/components-2.json" \
+    | python3 -c 'import json,sys; print(json.load(sys.stdin).get("version",""))')"
+  if [ -z "${version}" ]; then
+    echo "バージョンの取得に失敗しました。GCLOUD_VERSION を指定して再実行してください。" >&2
+    exit 1
+  fi
 fi
-archive_url="https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/${archive_name}"
+
+archive_name="google-cloud-cli-${version}-${archive_arch}.tar.gz"
+archive_url="${BASE_URL}/${archive_name}"
 checksum_url="${archive_url}.sha256"
 
 tmp_dir="$(mktemp -d)"
 archive_path="${tmp_dir}/${archive_name}"
 checksum_path="${archive_path}.sha256"
 
-cleanup() {
-  rm -rf "${tmp_dir}"
-}
+cleanup() { rm -rf "${tmp_dir}"; }
 trap cleanup EXIT
 
 if [ -d "${INSTALL_DIR}" ]; then
@@ -50,12 +59,7 @@ if [ -d "${INSTALL_DIR}" ]; then
   exit 1
 fi
 
-if [ -n "${GCLOUD_VERSION}" ]; then
-  echo ">>> Google Cloud SDK ${GCLOUD_VERSION} をダウンロードしています..."
-else
-  echo ">>> Google Cloud SDK の最新版をダウンロードしています..."
-fi
-
+echo ">>> Google Cloud SDK ${version} (${archive_arch}) をダウンロードしています..."
 curl -fsSL -o "${archive_path}" "${archive_url}"
 curl -fsSL -o "${checksum_path}" "${checksum_url}"
 
@@ -69,7 +73,7 @@ if [ -z "${expected_checksum}" ] || [ "${expected_checksum}" != "${actual_checks
   exit 1
 fi
 
-echo ">>> アーカイブを展開しています..."
+echo ">>> SHA256 検証が通過しました。アーカイブを展開しています..."
 tar -xzf "${archive_path}" -C "${HOME}"
 
 echo ">>> Google Cloud SDK をインストールしています..."
