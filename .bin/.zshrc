@@ -26,6 +26,16 @@ if type "bat" > /dev/null 2>&1; then
     alias cat="bat"
 fi
 
+# date
+if type "gdate" > /dev/null 2>&1; then
+    alias date="gdate"
+fi
+
+# date
+if type "gsed" > /dev/null 2>&1; then
+    alias sed='gsed'
+fi
+
 alias rm='rm -i'
 alias cp='cp -i'
 alias mv='mv -i'
@@ -68,9 +78,18 @@ setopt hist_ignore_dups
 setopt append_history
 # 履歴をインクリメンタルに追加
 setopt inc_append_history
+# 余分な空白は詰めて記録
+setopt hist_reduce_blanks
+# 補完時にヒストリを自動的に展開
+setopt hist_expand
+# 同時に起動したzshの間でヒストリを共有する
+setopt share_history
 
 # mise activate
 eval "$(/opt/homebrew/bin/mise activate zsh)"
 
 # set theme via `starship`
 eval "$(starship init zsh)"
+
+# aws cli
+export AWS_PAGER=""

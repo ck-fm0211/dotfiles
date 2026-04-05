@@ -16,7 +16,10 @@ done
 echo "\n========================"
 echo "create .config in $HOME"
 mkdir -p $HOME/.config
-for dotfile in $(ls -F "${SCRIPT_DIR}"/config | grep -v /); do
+for dotfile in $(find "${SCRIPT_DIR}/config" -type f); do
     [[ $dotfile =~ $IGNORE_PATTERN ]] && continue
-    ln -snfv "${SCRIPT_DIR}/config/$dotfile" "$HOME/.config/$dotfile"
+    relative_path="${dotfile#"${SCRIPT_DIR}/config/"}"
+    target_dir="$HOME/.config/$(dirname "$relative_path")"
+    mkdir -p "$target_dir"
+    ln -snfv "$dotfile" "$target_dir/$(basename "$dotfile")"
 done

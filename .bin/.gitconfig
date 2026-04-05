@@ -13,5 +13,6 @@
 	sw = switch
 [core]
 	editor = code --wait
+	pager = less -F -X
 [init]
 	defaultBranch = main
