@@ -32,8 +32,19 @@
       "Write(~/.bashrc)"
     ]
   },
+  "extraKnownMarketplaces": {
+    "claude-code-harness-marketplace": {
+      "source": {
+        "source": "github",
+        "repo": "Chachamaru127/claude-code-harness"
+      }
+    }
+  },
   "sandbox": {
     "enabled": true,
     "autoAllowBashIfSandboxed": false
+  },
+  "enabledPlugins": {
+    "claude-code-harness@claude-code-harness-marketplace": true
   }
 }
