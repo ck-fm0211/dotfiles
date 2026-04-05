@@ -42,3 +42,6 @@ vscode "vscode-icons-team.vscode-icons"
 vscode "wmaurer.change-case"
 vscode "yzane.markdown-pdf"
 vscode "yzhang.markdown-all-in-one"
+
+# newly added (2026-03-31)
+vscode "anthropic.claude-code"

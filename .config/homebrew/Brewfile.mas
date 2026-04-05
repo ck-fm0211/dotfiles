@@ -7,3 +7,6 @@ mas "LINE", id: 539883307
 mas "Numbers", id: 409203825
 mas "Pages", id: 409201541
 mas "Slack", id: 803453959
+
+# newly added (2026-03-31)
+mas "Actions"

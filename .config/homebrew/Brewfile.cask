@@ -22,3 +22,6 @@ cask "obsidian"
 cask "visual-studio-code"
 cask "vlc"
 cask "zoom"
+
+# newly added (2026-03-31)
+cask "kiro"
