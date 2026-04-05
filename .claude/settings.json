@@ -1,0 +1,18 @@
+{
+  "$$comment": [
+    "このファイルはリポジトリ固有の Claude Code プロジェクト設定です。",
+    "グローバル設定（~/.config/claude/settings.json）に追加で適用されます。",
+    "",
+    "【注意】このリポジトリ内の .config/claude/ は dotfiles のソースです。",
+    "  .config/claude/  = ~/dotfiles 管理下のグローバル設定ソース（make link でシンボリックリンクされる）",
+    "  .claude/         = このリポジトリで作業する時の Claude Code プロジェクト設定（シンボリックリンクされない）",
+    "",
+    "編集時は混同しないこと。"
+  ],
+  "permissions": {
+    "allow": [
+      "Bash(shellcheck:*)",
+      "Bash(yq:*)"
+    ]
+  }
+}

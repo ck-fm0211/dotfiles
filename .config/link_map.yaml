@@ -6,6 +6,9 @@ git:
   -
     src: .config/git/ignore
     dst: .config/git/ignore
+  -
+    src: .config/git/hooks
+    dst: .config/git/hooks
 
 homebrew:
   -
@@ -28,6 +31,10 @@ sheldon:
   src: .config/sheldon/plugins.toml
   dst: .config/sheldon/plugins.toml
 
+mise:
+  src: .config/mise/config.toml
+  dst: .config/mise/config.toml
+
 zsh:
   -
     src: .config/zsh/.zshenv
@@ -35,6 +42,9 @@ zsh:
   -
     src: .config/zsh/.zshrc
     dst: .config/zsh/.zshrc
+  -
+    src: .config/zsh/path.zsh
+    dst: .config/zsh/path.zsh
   -
     src: .config/zsh/completion.zsh
     dst: .config/zsh/completion.zsh
@@ -48,6 +58,9 @@ zsh:
     src: .config/zsh/alias.zsh
     dst: .config/zsh/alias.zsh
   -
+    src: .config/zsh/functions.zsh
+    dst: .config/zsh/functions.zsh
+  -
     src: .config/zsh/.p10k.zsh
     dst: .config/zsh/.p10k.zsh
 
@@ -56,8 +69,12 @@ iterm2:
   dst: .config/iterm2/com.googlecode.iterm2.plist
 
 vscode:
-  src: .config/vscode/settings.json
-  dst: "Library/Application Support/Code/User/settings.json"
+  -
+    src: .config/vscode/settings.json
+    dst: "Library/Application Support/Code/User/settings.json"
+  -
+    src: .config/vscode/keybindings.json
+    dst: "Library/Application Support/Code/User/keybindings.json"
 
 python:
   src: .config/python/pythonrc
@@ -66,6 +83,14 @@ python:
 custom_scripts:
   src: .local/bin/scripts
   dst: .local/bin/scripts
+
+bat:
+  src: .config/bat/config
+  dst: .config/bat/config
+
+ripgrep:
+  src: .config/ripgrep/config
+  dst: .config/ripgrep/config
 
 claude_code:
   -

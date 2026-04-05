@@ -1,0 +1,67 @@
+[
+  // ターミナル: 新規ウィンドウで分割
+  {
+    "key": "cmd+shift+5",
+    "command": "workbench.action.terminal.split"
+  },
+  // エディタ: 選択行を上下に移動
+  {
+    "key": "alt+up",
+    "command": "editor.action.moveLinesUpAction",
+    "when": "editorTextFocus"
+  },
+  {
+    "key": "alt+down",
+    "command": "editor.action.moveLinesDownAction",
+    "when": "editorTextFocus"
+  },
+  // エディタ: 選択行を複製
+  {
+    "key": "shift+alt+down",
+    "command": "editor.action.copyLinesDownAction",
+    "when": "editorTextFocus"
+  },
+  // エディタ: すべての一致箇所を選択
+  {
+    "key": "cmd+shift+l",
+    "command": "editor.action.selectHighlights",
+    "when": "editorTextFocus"
+  },
+  // エクスプローラー: ファイル名変更
+  {
+    "key": "enter",
+    "command": "renameFile",
+    "when": "explorerViewletVisible && filesExplorerFocus && !explorerResourceIsRoot && !explorerResourceReadonly && !inputFocus"
+  },
+  // エクスプローラー: 新規ファイル
+  {
+    "key": "cmd+n",
+    "command": "explorer.newFile",
+    "when": "explorerViewletVisible && filesExplorerFocus && !inputFocus"
+  },
+  // サイドバー: フォーカストグル
+  {
+    "key": "cmd+b",
+    "command": "workbench.action.toggleSidebarVisibility"
+  },
+  // GitHub Copilot Chat を開く
+  {
+    "key": "cmd+shift+i",
+    "command": "workbench.action.chat.open"
+  },
+  // 検索: ファイルに跨って検索（エクスプローラーフォーカス時も）
+  {
+    "key": "cmd+shift+f",
+    "command": "workbench.action.findInFiles"
+  },
+  // ターミナル: フォーカス
+  {
+    "key": "ctrl+`",
+    "command": "workbench.action.terminal.focus"
+  },
+  // エディタ: シンボルへジャンプ
+  {
+    "key": "cmd+r",
+    "command": "workbench.action.gotoSymbol"
+  }
+]

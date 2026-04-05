@@ -1,0 +1,63 @@
+#!/bin/bash
+# commit-msg フック: Conventional Commits 形式を検証する
+#
+# 形式: <type>[optional scope]: <description>
+# 例:
+#   feat: ユーザー認証を追加
+#   fix(api): レスポンスのタイムアウトを修正
+#   docs: README を更新
+#   chore!: Node.js を v20 に更新（破壊的変更）
+#
+# https://www.conventionalcommits.org/ja/
+
+COMMIT_MSG_FILE="$1"
+COMMIT_MSG=$(cat "$COMMIT_MSG_FILE")
+
+# マージコミット・Revert コミットは検証をスキップ
+if echo "$COMMIT_MSG" | grep -qE "^(Merge|Revert|fixup!|squash!)"; then
+  exit 0
+fi
+
+# WIP コミットは警告のみ（ブロックしない）
+if echo "$COMMIT_MSG" | grep -qiE "^wip"; then
+  echo "⚠  WIP コミットが検出されました。後でリベースすることをお勧めします。"
+  exit 0
+fi
+
+# Conventional Commits パターン
+PATTERN="^(build|chore|ci|docs|feat|fix|perf|refactor|revert|style|test)(\(.+\))?(!)?: .{1,100}$"
+
+FIRST_LINE=$(echo "$COMMIT_MSG" | head -1)
+
+if ! echo "$FIRST_LINE" | grep -qE "$PATTERN"; then
+  echo ""
+  echo "❌ コミットメッセージが Conventional Commits 形式に準拠していません。"
+  echo ""
+  echo "  正しい形式: <type>[optional scope]: <description>"
+  echo ""
+  echo "  使用可能な type:"
+  echo "    feat     新機能"
+  echo "    fix      バグ修正"
+  echo "    docs     ドキュメントのみの変更"
+  echo "    style    コードの意味に影響しない変更（空白、フォーマット等）"
+  echo "    refactor バグ修正でも機能追加でもないコードの変更"
+  echo "    perf     パフォーマンス改善"
+  echo "    test     テストの追加・修正"
+  echo "    build    ビルドシステムや外部依存の変更"
+  echo "    ci       CI 設定の変更"
+  echo "    chore    その他の変更"
+  echo "    revert   コミットの取り消し"
+  echo ""
+  echo "  例:"
+  echo "    feat: ユーザー認証を追加"
+  echo "    fix(api): タイムアウト処理を修正"
+  echo "    docs: README にセットアップ手順を追加"
+  echo ""
+  echo "  入力されたメッセージ: $FIRST_LINE"
+  echo ""
+  echo "  スキップする場合: git commit --no-verify"
+  echo ""
+  exit 1
+fi
+
+exit 0

@@ -1,0 +1,36 @@
+# bat 設定ファイル
+# https://github.com/sharkdp/bat#configuration-file
+#
+# 場所: $XDG_CONFIG_HOME/bat/config（BAT_CONFIG_PATH で上書き可）
+
+# カラーテーマ
+--theme="Solarized (dark)"
+
+# 表示スタイル（行番号・変更ハイライト・ファイルヘッダー）
+--style=numbers,changes,header
+
+# タブ幅
+--tabs=2
+
+# イタリック体を有効化（ターミナルが対応している場合）
+--italic-text=always
+
+# 自動ページング（出力が 1 画面を超える場合のみ less を起動）
+--paging=auto
+
+# less のオプション（カラー出力・行番号 etc.）
+--pager="less -RF"
+
+# シンタックスマッピング（拡張子がない・特殊なファイル）
+--map-syntax="*.zsh:Bash"
+--map-syntax=".zshenv:Bash"
+--map-syntax=".zshrc:Bash"
+--map-syntax=".p10k.zsh:Bash"
+--map-syntax="*.toml:TOML"
+--map-syntax="Makefile:Makefile"
+--map-syntax="Brewfile:Ruby"
+--map-syntax="*.conf:INI"
+--map-syntax="*.lock:TOML"
+
+# Git diff での使用時はシンプルな表示
+# （`git diff | bat` のようなパイプ使用時に自動判定される）

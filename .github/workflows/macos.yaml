@@ -1,4 +1,4 @@
-name: macos
+name: macOS CI
 
 on:
   push:
@@ -6,41 +6,95 @@ on:
   pull_request:
     branches: [ main ]
 
+# 同一ブランチで複数 push がある場合、古いジョブをキャンセル
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
 jobs:
+  # ============================================================
+  # shellcheck: スクリプトの静的解析（軽量なので単独ジョブ）
+  # ============================================================
+  shellcheck:
+    name: Shellcheck
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Run shellcheck
+        run: |
+          find scripts/ -name "*.sh" -print0 \
+            | xargs -0 shellcheck -e SC1091 --severity=warning
+
+  # ============================================================
+  # macOS セットアップテスト
+  # ============================================================
   macos-test:
+    name: macOS Setup Test
     runs-on: macos-latest
+    needs: shellcheck
 
     steps:
-    - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
-    - name: Run install.sh
-      run: make install
+      # Homebrew のキャッシュ
+      - name: Cache Homebrew
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/Library/Caches/Homebrew
+            /opt/homebrew/Cellar
+          key: ${{ runner.os }}-brew-${{ hashFiles('.config/homebrew/Brewfile', '.config/homebrew/Brewfile.cask', '.config/homebrew/Brewfile.taps') }}
+          restore-keys: |
+            ${{ runner.os }}-brew-
 
-    - name: Run link.sh
-      run: make link
+      - name: Install (Homebrew + XDG + yq)
+        run: make install
 
-    - name: Run brew
-      run: |
-        make brew-bundle-taps
-        make brew-bundle
-        make brew-bundle-cask
-        make brew-bundle-vscode
-        # make brew-bundle-mas # skip
+      - name: Create symlinks
+        run: make link
 
-    - name: Run sheldon.sh
-      run: make sheldon
+      - name: Install Homebrew packages
+        run: |
+          make brew-bundle-taps
+          make brew-bundle
+          make brew-bundle-cask
+          make brew-bundle-vscode
+          # make brew-bundle-mas  # Mac App Store は認証が必要なためスキップ
 
-    - name: Run mac_defaults.sh
-      run: make mac-defaults
+      - name: Initialize sheldon
+        run: make sheldon
 
-    - name: install aws cli
-      run: make install-awscli
+      - name: Apply macOS defaults
+        run: make mac-defaults
 
-    - name: install gcloud
-      run: make install-gcloud
+      - name: Install AWS CLI
+        run: make install-awscli
 
-    - name: install claude-code
-      run: make install-claude-code
+      - name: Install Google Cloud SDK
+        run: |
+          make install-gcloud
+          echo "$HOME/google-cloud-sdk/bin" >> "$GITHUB_PATH"
 
-    - name: shellcheck
-      run: make shellcheck
+      - name: Install Claude Code
+        run: |
+          make install-claude-code
+          echo "$HOME/.local/bin" >> "$GITHUB_PATH"
+
+      - name: Configure Git for CI
+        run: |
+          git config --global user.name "GitHub Actions"
+          git config --global user.email "actions@github.com"
+          git config --global init.defaultBranch main
+
+      - name: Configure Git hooks
+        run: make git-hooks
+
+      - name: Run doctor (environment health check)
+        run: make doctor || true  # 警告があっても CI は継続
+
+      - name: Run shellcheck (zsh configs)
+        run: make shellcheck

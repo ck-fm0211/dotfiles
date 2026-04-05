@@ -1,0 +1,48 @@
+# ripgrep 設定ファイル
+# https://github.com/BurntSushi/ripgrep/blob/master/GUIDE.md#configuration-file
+#
+# 場所: $RIPGREP_CONFIG_PATH（.zshenv で設定）
+
+# 大文字小文字の自動判定（パターンに大文字があれば case-sensitive）
+--smart-case
+
+# シンボリックリンクをたどる
+--follow
+
+# 隠しファイル・ディレクトリも検索対象に含める（.gitignore で除外）
+--hidden
+
+# 検索除外パターン（高頻度で検索したくないもの）
+--glob=!.git/
+--glob=!.DS_Store
+--glob=!node_modules/
+--glob=!.node_modules/
+--glob=!vendor/
+--glob=!.vendor/
+--glob=!dist/
+--glob=!build/
+--glob=!.build/
+--glob=!target/
+--glob=!*.lock
+--glob=!*.sum
+--glob=!*.min.js
+--glob=!*.min.css
+--glob=!*.map
+
+# カラー設定
+--colors=line:fg:yellow
+--colors=line:style:bold
+--colors=path:fg:cyan
+--colors=path:style:bold
+--colors=match:fg:red
+--colors=match:style:bold
+
+# 長い行を省略表示（プレビューを表示）
+--max-columns=150
+--max-columns-preview
+
+# バイナリファイルを自動で除外
+--binary
+
+# マッチしたファイルの件数を表示しない（ノイズ減少）
+# --no-count
