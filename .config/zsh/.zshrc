@@ -11,10 +11,7 @@ fi
 
 # zsh
 export HISTFILE="$XDG_STATE_HOME"/zsh/history
-# ヒストリに保存するコマンド数
-export HISTSIZE=10000
-# ヒストリファイルに保存するコマンド数
-export SAVEHIST=10000
+# HISTSIZE / SAVEHIST は settings.zsh で一元管理（sheldon 経由で読み込み）
 
 # Homebrew PATH ブートストラップ（sheldon を起動する前に必要）
 if [[ -x /opt/homebrew/bin/brew ]]; then
