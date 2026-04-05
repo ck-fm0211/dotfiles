@@ -108,7 +108,7 @@ success "Finder"
 # スクリーンショット
 # ============================================================
 log "スクリーンショットを設定しています..."
-SCREENSHOT_DIR="$HOME/screenshots"
+SCREENSHOT_DIR="${XDG_PICTURES_DIR:-$HOME/Pictures}/Screenshots"
 mkdir -p "$SCREENSHOT_DIR"
 defaults write com.apple.screencapture location    "$SCREENSHOT_DIR"
 defaults write com.apple.screencapture type        -string "png"

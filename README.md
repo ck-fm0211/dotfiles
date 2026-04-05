@@ -29,10 +29,18 @@ Macの環境構築および設定ファイル（dotfiles）を管理するリポ
 ```
 
 このコマンド一発で以下をすべて自動実行します:
-1. macOS バージョン確認
+1. macOS バージョン確認（13 Ventura 以上を推奨）
 2. Xcode Command Line Tools インストール
 3. dotfiles リポジトリを `~/dotfiles` に clone
-4. `make setup` 実行（Homebrew・シンボリックリンク・パッケージ・macOS 設定・クラウドツール）
+4. `make install`（Homebrew・Rosetta・XDG ディレクトリ・yq）
+5. `make link`（シンボリックリンク作成）
+6. `make brew-bundle-taps` / `make brew-bundle` / `make brew-bundle-cask` / `make brew-bundle-vscode`（Homebrew パッケージ）
+7. `make sheldon`（Zsh プラグイン初期化）
+8. `make mac-defaults`（macOS システム設定）
+9. AWS CLI / Google Cloud SDK / Claude Code インストール（失敗時はスキップ）
+
+> **注意**: `make setup` で呼ばれる `mise-install`・`git-hooks`・`mcp-setup` は bootstrap フローに含まれません。
+> これらはローカル環境依存のため、セットアップ完了後に手動で `make setup` を実行するか、個別に実行してください。
 
 ### 既存環境への適用
 
@@ -203,7 +211,7 @@ make backup
 make link
 ```
 
-バックアップは `~/.dotfiles-backup/YYYYMMDD_HHMMSS/` に保存されます。
+バックアップは `~/.local/state/dotfiles/YYYYMMDD_HHMMSS/`（`$XDG_STATE_HOME/dotfiles/`）に保存されます。
 
 ### シンボリックリンクを元に戻したい
 
