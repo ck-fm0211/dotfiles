@@ -5,9 +5,9 @@ eval "$(sheldon source)"
 
 # gcloud
 # shellcheck disable=SC1091
-if [ -f '/Users/chikafumi/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/chikafumi/google-cloud-sdk/path.zsh.inc'; fi
+if [ -f "$HOME/google-cloud-sdk/path.zsh.inc" ]; then . "$HOME/google-cloud-sdk/path.zsh.inc"; fi
 # shellcheck disable=SC1091
-if [ -f '/Users/chikafumi/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/chikafumi/google-cloud-sdk/completion.zsh.inc'; fi
+if [ -f "$HOME/google-cloud-sdk/completion.zsh.inc" ]; then . "$HOME/google-cloud-sdk/completion.zsh.inc"; fi
 
 # iterm2
 # shellcheck disable=SC1091
