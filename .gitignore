@@ -1,6 +1,8 @@
 # Harness state (session-local, not committed)
 .claude/state/
 .claude/logs/
+.claude/sessions/
+.claude/worktrees/
 
 # OS
 .DS_Store

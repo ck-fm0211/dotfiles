@@ -9,7 +9,7 @@ help: ## コマンド一覧を表示
 # ============================================================
 
 .PHONY: setup
-setup: install brew-bundle-taps brew-bundle brew-bundle-cask brew-bundle-vscode sheldon link mise-install mac-defaults git-hooks install-awscli install-gcloud install-claude-code ## フルセットアップを一括実行
+setup: install brew-bundle-taps brew-bundle brew-bundle-cask brew-bundle-vscode sheldon link mise-install mac-defaults git-hooks install-awscli install-gcloud install-claude-code mcp-setup ## フルセットアップを一括実行
 
 .PHONY: bootstrap
 bootstrap: ## 新規 Mac で make を使わずに一発セットアップ（install.sh → link.sh → make setup の順に実行）
@@ -132,6 +132,14 @@ install-claude-code: ## Claude Code（Anthropic CLI）をインストール
 .PHONY: uninstall-claude-code
 uninstall-claude-code: ## Claude Code をアンインストール
 	./scripts/uninstall_claude_code.sh
+
+.PHONY: mcp-setup
+mcp-setup: ## MCPサーバーをClaude Codeにグローバル登録
+	./scripts/mcp_setup.sh
+
+.PHONY: mcp-dump
+mcp-dump: ## 現在登録済みのMCPサーバーをmcp-servers.jsonにエクスポート
+	./scripts/mcp_dump.sh
 
 # ============================================================
 # 診断・メンテナンス
