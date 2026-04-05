@@ -49,11 +49,6 @@ fi
 eval "$($BREW_PREFIX/bin/brew shellenv)"
 brew --version
 
-BREW_PATH_LINE="export PATH=$BREW_PREFIX/bin:\$PATH"
-if ! grep -qF "$BREW_PATH_LINE" "$HOME/.config/zsh/.zshrc" 2>/dev/null; then
-  echo "$BREW_PATH_LINE" >> "$HOME/.config/zsh/.zshrc"
-fi
-
 # ----- セットアップに必要なツール -----
 echo ">>> Installing yq..."
 brew install yq
