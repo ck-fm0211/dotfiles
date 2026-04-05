@@ -22,6 +22,9 @@ jobs:
     # - name: Run brew.sh
     #   run: ${GITHUB_WORKSPACE}/.bin/brew.sh
 
+    - name: Run zinit.sh
+      run: ${GITHUB_WORKSPACE}/.bin/zinit.sh
+
     - name: Run mac_defaults.sh
       run: ${GITHUB_WORKSPACE}/.bin/mac_defaults.sh
 

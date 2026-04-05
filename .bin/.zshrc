@@ -84,11 +84,6 @@ zinit snippet OMZL::git.zsh
 zinit snippet OMZP::git
 zinit cdclear -q
 
-## ターミナル間でのコマンド履歴を共有しない
-## iTermで複数開く際に別windowのコマンドが履歴に追加されるのを防ぐ
-setopt no_share_history
-unsetopt share_history
-
 ## コマンドのシンタックスハイライト
 zinit light zdharma/fast-syntax-highlighting
 
