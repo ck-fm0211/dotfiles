@@ -19,3 +19,5 @@ setopt hist_reduce_blanks
 setopt hist_expand
 # 同時に起動したzshの間でヒストリを共有する
 setopt share_history
+# '#'以降をコメントとして扱う
+setopt interactive_comments
