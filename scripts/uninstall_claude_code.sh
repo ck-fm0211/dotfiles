@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -e
+set -euo pipefail
 
 # XDG変数のフォールバック
 XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-$HOME/.config}"
@@ -8,7 +8,7 @@ XDG_CACHE_HOME="${XDG_CACHE_HOME:-$HOME/.cache}"
 
 echo "Claude Codeのインストール状況を確認しています..."
 
-claude_path=$(which claude || true)
+claude_path=$(command -v claude || true)
 
 if [ -z "$claude_path" ]; then
     echo "Claude Codeはインストールされていないか、PATHが通っていません。"
@@ -17,7 +17,7 @@ else
 fi
 
 # 確認メッセージ
-read -p "?Claude Codeをアンインストールしますか？ (y/N): " -r confirm
+read -r -p "Claude Codeをアンインストールしますか？ (y/N): " confirm
 if [[ ! "$confirm" =~ ^[yY]$ ]]; then
     echo "アンインストールをキャンセルしました。"
     exit 0
@@ -38,7 +38,7 @@ if command -v npm >/dev/null 2>&1; then
 fi
 
 # 3. 設定・キャッシュファイルの削除確認
-read -p "?設定ファイルとキャッシュ（$XDG_CONFIG_HOME/claude 等）も削除しますか？ (y/N): " -r rm_config
+read -r -p "設定ファイルとキャッシュ（$XDG_CONFIG_HOME/claude 等）も削除しますか？ (y/N): " rm_config
 if [[ "$rm_config" =~ ^[yY]$ ]]; then
     echo "設定とキャッシュを削除しています..."
 

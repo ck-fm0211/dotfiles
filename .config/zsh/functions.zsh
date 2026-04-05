@@ -256,14 +256,14 @@ fi
 
 # calc: シンプルな計算機（例: calc "1 + 2 * 3"）
 calc() {
-  python3 -c "print($*)"
+  python3 -c "import sys; print(eval(sys.argv[1]))" "$*"
 }
 
 # goog: デフォルトブラウザで Google 検索
 if [[ "$OSTYPE" == darwin* ]]; then
   goog() {
     local query
-    query=$(python3 -c "import urllib.parse; print(urllib.parse.quote('$*'))")
+    query=$(python3 -c "import sys, urllib.parse; print(urllib.parse.quote(sys.argv[1]))" "$*")
     open "https://www.google.com/search?q=${query}"
   }
 fi

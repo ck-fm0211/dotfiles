@@ -51,19 +51,21 @@ jobs:
             vscode:
               - '.config/homebrew/Brewfile.vscode'
 
-      # Homebrew のキャッシュ（CLI ツールのみ対象: Cellar は cask 除外で小さくなる）
-      - name: Cache Homebrew
+      # Homebrew のダウンロードキャッシュのみ保持（Cellar はランナーとの競合を避けるため除外）
+      - name: Cache Homebrew downloads
         uses: actions/cache@v4
         with:
-          path: |
-            ~/Library/Caches/Homebrew
-            /opt/homebrew/Cellar
+          path: ~/Library/Caches/Homebrew
           key: ${{ runner.os }}-brew-${{ hashFiles('.config/homebrew/Brewfile', '.config/homebrew/Brewfile.taps') }}
           restore-keys: |
             ${{ runner.os }}-brew-
 
       - name: Install (Homebrew + XDG + yq)
         run: make install
+
+      # ランナーのプリインストール済みパッケージと brew bundle の競合を防ぐ
+      - name: Cleanup stale Homebrew state
+        run: brew cleanup --prune=all 2>/dev/null || true
 
       - name: Create symlinks
         run: make link
