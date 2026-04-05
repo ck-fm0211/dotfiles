@@ -6,7 +6,6 @@ brew "asdf"
 brew "brew-cask-completion"
 brew "curl"
 brew "docker"
-brew "embulk"
 brew "git"
 brew "gnu-sed"
 brew "gnupg"
@@ -29,6 +28,7 @@ cask "google-japanese-ime"
 cask "kindle-previewer"
 cask "obsidian"
 cask "visual-studio-code"
+mas "1Password for Safari", id: 1569813296
 mas "BetterSnapTool", id: 417375580
 mas "GarageBand", id: 682658836
 mas "iMovie", id: 408981434
