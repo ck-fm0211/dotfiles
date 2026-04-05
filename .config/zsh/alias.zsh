@@ -43,11 +43,11 @@ if type "fd" > /dev/null 2>&1; then
 fi
 
 # ============================================================
-# GNU ツール
+# GNU ツール（macOS の BSD 版を上書き）
 # ============================================================
-type "gdate" > /dev/null 2>&1 && alias gdate='gdate'
-type "gsed"  > /dev/null 2>&1 && alias gsed='gsed'
-type "gawk"  > /dev/null 2>&1 && alias gawk='gawk'
+type "gdate" > /dev/null 2>&1 && alias date="gdate"
+type "gsed"  > /dev/null 2>&1 && alias sed='gsed'
+type "gawk"  > /dev/null 2>&1 && alias awk='gawk'
 
 # ============================================================
 # diff
