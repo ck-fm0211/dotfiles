@@ -26,6 +26,7 @@ jobs:
       run: |
         temp_file=$(mktemp)
         cat "$HOMEBREW_BUNDLE_FILE_GLOBAL"| sed '/^mas /d' > "$temp_file"
+        cat $temp_file
         cat "$temp_file" > "$HOMEBREW_BUNDLE_FILE_GLOBAL"
         ${GITHUB_WORKSPACE}/scripts/brew.sh
 
