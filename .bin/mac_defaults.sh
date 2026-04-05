@@ -128,6 +128,9 @@ defaults write com.apple.terminal StringEncodings -array 4
 ## 全ての拡張子のファイルを表示する
 defaults write -g AppleShowAllExtensions -bool true
 
+# Fnキーを標準のファンクションキーとして使用
+defaults write NSGlobalDomain com.apple.keyboard.fnState -bool true
+
 # 再起動
 echo "Please restart the OS."
 echo "command: sudo shutdown -r now"
