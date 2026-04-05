@@ -3,7 +3,7 @@ setup: install link brew-bundle brew-bundle-mas brew-bundle-cask brew-bundle-tap
 
 .PHONY: shellcheck
 shellcheck:
-	shellcheck ./**/*.sh ./.config/zsh/.zshrc ./.config/zsh/.zshenv
+	shellcheck ./**/*.sh ./.config/zsh/.zshrc ./.config/zsh/.zshenv ./.local/**/**/*.sh
 
 .PHONY: install
 install:

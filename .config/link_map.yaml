@@ -62,3 +62,7 @@ vscode:
 python:
   src: .config/python/pythonrc
   dst: python/pythonrc
+
+custom_scripts:
+  src: .local/bin/scripts
+  dst: .local/bin/scripts
