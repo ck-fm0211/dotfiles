@@ -32,27 +32,27 @@ fi
 # grep / ripgrep
 # ============================================================
 if type "rg" > /dev/null 2>&1; then
-  alias grep='rg'
+  alias grp='rg'
 fi
 
 # ============================================================
 # find / fd
 # ============================================================
 if type "fd" > /dev/null 2>&1; then
-  alias find='fd'
+  alias fdd='fd'
 fi
 
 # ============================================================
-# GNU ツール（macOS の BSD 版を上書き）
+# GNU ツール
 # ============================================================
-type "gdate" > /dev/null 2>&1 && alias date="gdate"
-type "gsed"  > /dev/null 2>&1 && alias sed='gsed'
-type "gawk"  > /dev/null 2>&1 && alias awk='gawk'
+type "gdate" > /dev/null 2>&1 && alias gdate='gdate'
+type "gsed"  > /dev/null 2>&1 && alias gsed='gsed'
+type "gawk"  > /dev/null 2>&1 && alias gawk='gawk'
 
 # ============================================================
 # diff
 # ============================================================
-type "colordiff" > /dev/null 2>&1 && alias diff='colordiff'
+type "colordiff" > /dev/null 2>&1 && alias cdiff='colordiff'
 
 # ============================================================
 # 安全操作（確認プロンプト付き）
