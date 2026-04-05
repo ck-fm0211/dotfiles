@@ -30,10 +30,11 @@ make setup
 * `make brew-bundle-mas` / `cask` / `taps` / `vscode` : それぞれ個別のBrewfileからインストールを実行します。
 * `make brew-dump`: 現在インストールされているHomebrewパッケージのリストを各 `Brewfile` に書き出してバックアップします。
 
-### 外部ツール・SDKの管理
+  ### 外部ツール・SDKの管理
 
 * `make install-awscli` / `make uninstall-awscli`: AWS CLI v2 のインストールおよびアンインストールを行います。
 * `make install-gcloud` / `make uninstall-gcloud`: Google Cloud SDK のインストールおよびアンインストールを行います。
+* `make install-claude-code`: Claude Code (Anthropic CLI) のインストールを行います。インストール後、`claude` コマンドで認証を行ってください。
 
 ### 開発・検証用
 

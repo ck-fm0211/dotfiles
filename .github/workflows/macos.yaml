@@ -28,7 +28,7 @@ jobs:
         # make brew-bundle-mas # skip
 
     - name: Run sheldon.sh
-      run: make sheldon 
+      run: make sheldon
 
     - name: Run mac_defaults.sh
       run: make mac-defaults
@@ -38,6 +38,9 @@ jobs:
 
     - name: install gcloud
       run: make install-gcloud
+
+    - name: install claude-code
+      run: make install-claude-code
 
     - name: shellcheck
       run: make shellcheck

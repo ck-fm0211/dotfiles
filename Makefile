@@ -1,5 +1,5 @@
 .PHONY: setup
-setup: install link brew-bundle brew-bundle-mas brew-bundle-cask brew-bundle-taps brew-bundle-vscode sheldon mac-defaults install_awscli install_gcloud
+setup: install link brew-bundle brew-bundle-mas brew-bundle-cask brew-bundle-taps brew-bundle-vscode sheldon mac-defaults install_awscli install_gcloud install_claude_code
 
 .PHONY: shellcheck
 shellcheck:
@@ -60,3 +60,11 @@ brew-bundle-vscode:
 .PHONY: brew-dump
 brew-dump:
 	./scripts/brew_dumps.sh
+
+.PHONY: install_claude_code
+install-claude-code:
+	./scripts/install_claude_code.sh
+
+.PHONY: uninstall_claude_code
+uninstall-claude-code:
+	./scripts/uninstall_claude_code.sh
