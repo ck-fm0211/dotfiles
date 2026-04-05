@@ -68,5 +68,9 @@ custom_scripts:
   dst: .local/bin/scripts
 
 claude_code:
-  src: .config/claude/settings.json
-  dst: .config/claude/settings.json
+  -
+    src: .config/claude/settings.json
+    dst: .config/claude/settings.json
+  -
+    src: .config/claude/CLAUDE.md
+    dst: .config/claude/CLAUDE.md

@@ -102,6 +102,7 @@ die() {
   exit 1
 }
 
+# shellcheck disable=SC2329
 cleanup() {
   # shellcheck disable=SC2317  # called via trap
   [[ -n "${TMP1:-}" && -f "$TMP1" ]] && rm -f "$TMP1"
