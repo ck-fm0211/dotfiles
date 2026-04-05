@@ -1,0 +1,15 @@
+{
+    "workbench.iconTheme": "vscode-icons",
+    "workspaceExplorer.workspaceStorageDirectory": "/Applications/vscode_workspaces",
+    "editor.fontFamily": "Osaka-Mono",
+    "editor.fontSize": 14,
+    "editor.lineHeight": 0,
+    "editor.letterSpacing": 0,
+    "workbench.fontAliasing": "default",
+    "workbench.colorCustomizations": {
+        "editor.lineHighlightBackground": "#2796ff22",
+        "editor.lineHighlightBorder": "#2796ff55",
+        "editorLineNumber.activeForeground": "#2797ff",
+        "editorLineNumber.foreground": "#ffffff"
+    }
+}

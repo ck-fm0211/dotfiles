@@ -32,3 +32,7 @@ zsh:
 iterm2:
   src: .config/iterm2/com.googlecode.iterm2.plist
   dst: .config/iterm2/com.googlecode.iterm2.plist
+
+vscode:
+  src: .config/vscode/settings.json
+  dst: "Library/Application Support/Code/User/settings.json"
