@@ -2,7 +2,7 @@
 set -e
 
 # rosetta
-sudo softwareupdate --install-rosetta
+# sudo softwareupdate --install-rosetta
 
 # brew
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
