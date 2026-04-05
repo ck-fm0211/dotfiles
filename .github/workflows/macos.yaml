@@ -16,19 +16,19 @@ jobs:
     - name: Run install.sh
       run: ${GITHUB_WORKSPACE}/.bin/install.sh
 
-    - name: Run zinit.sh
-      run: ${GITHUB_WORKSPACE}/.bin/zinit.sh
-
     - name: Run link.sh
       run: ${GITHUB_WORKSPACE}/.bin/link.sh
 
     # - name: Run brew.sh
     #   run: ${GITHUB_WORKSPACE}/.bin/brew.sh
 
+    # - name: Run sheldon.sh
+    #   run: ${GITHUB_WORKSPACE}/.bin/sheldon.sh
+
     - name: Run mac_defaults.sh
       run: ${GITHUB_WORKSPACE}/.bin/mac_defaults.sh
 
-    - name: Load .zshrc
-      run: |
-        zsh ~/.zshrc 2> error.log; cat error.log
-        if [ -s error.log ]; then false; fi
+    # - name: Load .zshrc
+    #   run: |
+    #     zsh ~/.zshrc 2> error.log; cat error.log
+    #     if [ -s error.log ]; then false; fi
