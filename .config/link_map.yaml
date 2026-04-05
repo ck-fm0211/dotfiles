@@ -28,12 +28,14 @@ homebrew:
     dst: .config/homebrew/Brewfile.vscode
 
 sheldon:
-  src: .config/sheldon/plugins.toml
-  dst: .config/sheldon/plugins.toml
+  -
+    src: .config/sheldon/plugins.toml
+    dst: .config/sheldon/plugins.toml
 
 mise:
-  src: .config/mise/config.toml
-  dst: .config/mise/config.toml
+  -
+    src: .config/mise/config.toml
+    dst: .config/mise/config.toml
 
 zsh:
   -
