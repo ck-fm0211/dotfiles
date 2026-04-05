@@ -16,9 +16,9 @@ Codex による網羅的リポジトリ分析で洗い出した課題を優先�
 
 | Task | 内容 | DoD | Depends | Status |
 |------|------|-----|---------|--------|
-| 1.1 | `scripts/install_gcloud.sh` の `curl \| bash` に SHA256 検証を追加する（**Homebrew 管理へは移行しない** — 公式インストール手順を維持する方針） | ダウンロード後に `sha256sum` でアーカイブを検証してから展開している | - | cc:TODO |
-| 1.2 | `scripts/install_claude_code.sh` の `curl \| bash` に SHA256 検証を追加する（**Homebrew 管理へは移行しない** — 公式インストール手順を維持する方針） | `sha256sum` コマンドでダウンロード物の検証が通ることをスクリプト内で確認している | - | cc:TODO |
-| 1.3 | `scripts/uninstall_awscli.sh` の `~/.aws/` 削除確認フローを実コードに合わせて説明を修正し、誤操作しにくい明示的な purge 操作へ改善する（現状は y/N 確認後に削除、**Homebrew 管理へは移行しない**） | `~/.aws/` の削除は通常アンインストール経路から分離され、`--purge` 相当の明示操作なしでは削除されない。課題説明が実装の挙動と一致している | - | cc:TODO |
+| 1.1 | `scripts/install_gcloud.sh` の `curl \| bash` に SHA256 検証を追加する（**Homebrew 管理へは移行しない** — 公式インストール手順を維持する方針） | ダウンロード後に `sha256sum` でアーカイブを検証してから展開している | - | cc:完了 [d9cfcab] |
+| 1.2 | `scripts/install_claude_code.sh` の `curl \| bash` に SHA256 検証を追加する（**Homebrew 管理へは移行しない** — 公式インストール手順を維持する方針） | `sha256sum` コマンドでダウンロード物の検証が通ることをスクリプト内で確認している | - | cc:完了 [d9cfcab] |
+| 1.3 | `scripts/uninstall_awscli.sh` の `~/.aws/` 削除確認フローを実コードに合わせて説明を修正し、誤操作しにくい明示的な purge 操作へ改善する（現状は y/N 確認後に削除、**Homebrew 管理へは移行しない**） | `~/.aws/` の削除は通常アンインストール経路から分離され、`--purge` 相当の明示操作なしでは削除されない。課題説明が実装の挙動と一致している | - | cc:完了 [d9cfcab] |
 | 1.4 | `scripts/mcp_setup.sh` の env_flags を配列化してシェルメタ文字インジェクションリスクを排除 | `shellcheck` が通り、`SC2086` 抑止コメントが不要になる | - | cc:TODO |
 | 1.5 | `scripts/install.sh` の Rosetta 導入済み判定を追加し、`/etc/zshenv` 変更を明示タスクへ分離 | 再実行時に Rosetta 重複インストールを試みない | - | cc:TODO |
 | 1.6 | `scripts/install.sh` の `~/.config/zsh/.zshrc` 追記を削除する。`make link` で symlink 化された後は無効になるため | bootstrap フロー完了後に余分な追記が残らない | 1.5 | cc:TODO |
@@ -51,9 +51,9 @@ Codex による網羅的リポジトリ分析で洗い出した課題を優先�
 
 | Task | 内容 | DoD | Depends | Status |
 |------|------|-----|---------|--------|
-| 4.1 | `compinit` の二重初期化を解消する。`completion.zsh` と `plugins.compinit` のどちらか一方に集約する | シェル起動時に `compinit` が 1 回だけ呼ばれる | - | cc:TODO |
-| 4.2 | `.config/zsh/alias.zsh` の標準コマンド名上書き（`grep/find/date` 等）を最小化する。短縮 alias に寄せる | 標準コマンド名がそのまま動作する（alias 解除なしで） | - | cc:TODO |
-| 4.3 | VSCode 設定（JSONC）の CI バリデーションを整備する。JSONC 用バリデータ追加または README に明記する | `validate.yaml` の特別除外ロジックがなくなる、またはドキュメント化される | - | cc:TODO |
+| 4.1 | `compinit` の二重初期化を解消する。`completion.zsh` と `plugins.compinit` のどちらか一方に集約する | シェル起動時に `compinit` が 1 回だけ呼ばれる | - | cc:完了 [d9cfcab] |
+| 4.2 | `.config/zsh/alias.zsh` の標準コマンド名上書き（`grep/find/date` 等）を最小化する。短縮 alias に寄せる | 標準コマンド名がそのまま動作する（alias 解除なしで） | - | cc:完了 [d9cfcab] |
+| 4.3 | VSCode 設定（JSONC）の CI バリデーションを整備する。JSONC 用バリデータ追加または README に明記する | `validate.yaml` の特別除外ロジックがなくなる、またはドキュメント化される | - | cc:完了 [d9cfcab] |
 
 ## Phase 5: Claude Code / MCP 設定
 
