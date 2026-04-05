@@ -155,3 +155,5 @@ sudo shutdown -r now
 # Google日本語入力の設定を共有
 ln -s /Users/chikafumi/Library/CloudStorage/GoogleDrive-chikafumi.k@gmail.com/マイドライブ/mac_settings/JapaneseInput /Users/chikafumi/Library/Application\ Support/Google/JapaneseInput
 
+### VSCODE
+mkdir ~/vscode_workspaces
