@@ -11,9 +11,6 @@ export XDG_CACHE_HOME=$HOME/.cache
 export PATH=/opt/homebrew/bin:$PATH
 export HOMEBREW_BUNDLE_FILE_GLOBAL=$HOME/.config/homebrew/.Brewfile
 
-# starship
-export STARSHIP_CONFIG=$HOME/.config/starship/starship.toml
-
 # aws cli
 export AWS_PAGER=""
 
