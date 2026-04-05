@@ -130,7 +130,7 @@ uninstall-gcloud: ## Google Cloud SDK をアンインストール
 
 .PHONY: install-claude-code
 install-claude-code: ## Claude Code（Anthropic CLI）をインストール
-	./scripts/install_claude_code.sh
+	mise exec -- ./scripts/install_claude_code.sh
 
 .PHONY: uninstall-claude-code
 uninstall-claude-code: ## Claude Code をアンインストール
@@ -138,7 +138,7 @@ uninstall-claude-code: ## Claude Code をアンインストール
 
 .PHONY: mcp-setup
 mcp-setup: ## MCPサーバーをClaude Codeにグローバル登録
-	./scripts/mcp_setup.sh
+	mise exec -- ./scripts/mcp_setup.sh
 
 .PHONY: mcp-dump
 mcp-dump: ## 現在登録済みのMCPサーバーをmcp-servers.jsonにエクスポート
