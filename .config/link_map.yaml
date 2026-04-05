@@ -24,7 +24,7 @@ starship:
 zsh:
   -
     src: .config/zsh/.zshenv
-    dst: .zshenv
+    dst: .config/zsh/.zshenv
   - 
     src: .config/zsh/.zshrc
     dst: .config/zsh/.zshrc

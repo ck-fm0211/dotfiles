@@ -20,7 +20,12 @@ jobs:
       run: ${GITHUB_WORKSPACE}/scripts/link.sh
 
     - name: Run brew.sh
-      run: ${GITHUB_WORKSPACE}/scripts/brew.sh
+      # masはskip
+      run: |
+        temp_file=$(mktemp)
+        cat "$HOMEBREW_BUNDLE_FILE_GLOBAL"| sed '/^mas /d' > "$temp_file"
+        cat "$temp_file" > "$HOMEBREW_BUNDLE_FILE_GLOBAL"
+        ${GITHUB_WORKSPACE}/scripts/brew.sh
 
     - name: Run sheldon.sh
       run: ${GITHUB_WORKSPACE}/scripts/sheldon.sh
