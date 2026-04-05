@@ -3,17 +3,22 @@ tap "homebrew/services"
 tap "teamookla/speedtest"
 brew "coreutils"
 brew "asdf"
+brew "bat"
 brew "brew-cask-completion"
 brew "curl"
+brew "eza"
+brew "gawk"
 brew "git"
 brew "gnu-sed"
 brew "gnupg"
 brew "graphviz"
 brew "jq"
 brew "mas"
+brew "mise"
 brew "mysql"
 brew "peco"
 brew "postgresql@14"
+brew "starship"
 brew "tnftp"
 brew "tree"
 brew "zsh-autosuggestions"
@@ -31,6 +36,7 @@ cask "biscuit"
 cask "clipy"
 cask "docker"
 cask "dropbox"
+cask "font-meslo-lg-nerd-font"
 cask "google-chrome"
 cask "google-drive"
 cask "google-japanese-ime"
@@ -42,6 +48,17 @@ cask "notion-calendar"
 cask "obsidian"
 cask "visual-studio-code"
 cask "vlc"
+mas "1Password for Safari", id: 1569813296
+mas "BetterSnapTool", id: 417375580
+mas "GarageBand", id: 682658836
+mas "iMovie", id: 408981434
+mas "Keynote", id: 409183694
+mas "LINE", id: 539883307
+mas "MARKETSPEED", id: 946680495
+mas "Numbers", id: 409203825
+mas "Pages", id: 409201541
+mas "Slack", id: 803453959
+mas "The Unarchiver", id: 425424353
 vscode "4ops.terraform"
 vscode "adpyke.vscode-sql-formatter"
 vscode "bibhasdn.unique-lines"
@@ -71,6 +88,7 @@ vscode "oderwat.indent-rainbow"
 vscode "ryu1kn.partial-diff"
 vscode "shinichi-takii.sql-bigquery"
 vscode "streetsidesoftware.code-spell-checker"
+vscode "tamasfe.even-better-toml"
 vscode "tomsaunders.vscode-workspace-explorer"
 vscode "vscode-icons-team.vscode-icons"
 vscode "wmaurer.change-case"
