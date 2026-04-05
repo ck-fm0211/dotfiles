@@ -9,7 +9,7 @@ help: ## コマンド一覧を表示
 # ============================================================
 
 .PHONY: setup
-setup: install link brew-bundle-taps brew-bundle brew-bundle-cask brew-bundle-vscode sheldon mac-defaults git-hooks install-awscli install-gcloud install-claude-code ## フルセットアップを一括実行
+setup: install brew-bundle-taps brew-bundle brew-bundle-cask brew-bundle-vscode sheldon link mac-defaults git-hooks install-awscli install-gcloud install-claude-code ## フルセットアップを一括実行
 
 .PHONY: bootstrap
 bootstrap: ## 新規 Mac で make を使わずに一発セットアップ（install.sh → link.sh → make setup の順に実行）
