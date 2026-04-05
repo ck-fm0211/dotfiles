@@ -35,19 +35,30 @@ jobs:
   macos-test:
     name: macOS Setup Test
     runs-on: macos-latest
-    needs: shellcheck
+    # shellcheck と並列実行（独立しているため依存不要）
 
     steps:
       - uses: actions/checkout@v4
 
-      # Homebrew のキャッシュ
+      # Brewfile.cask / Brewfile.vscode の変更検出（PR 時のみ有効）
+      - name: Detect changed Brewfiles
+        id: brewfile-changes
+        uses: dorny/paths-filter@v3
+        with:
+          filters: |
+            cask:
+              - '.config/homebrew/Brewfile.cask'
+            vscode:
+              - '.config/homebrew/Brewfile.vscode'
+
+      # Homebrew のキャッシュ（CLI ツールのみ対象: Cellar は cask 除外で小さくなる）
       - name: Cache Homebrew
         uses: actions/cache@v4
         with:
           path: |
             ~/Library/Caches/Homebrew
             /opt/homebrew/Cellar
-          key: ${{ runner.os }}-brew-${{ hashFiles('.config/homebrew/Brewfile', '.config/homebrew/Brewfile.cask', '.config/homebrew/Brewfile.taps') }}
+          key: ${{ runner.os }}-brew-${{ hashFiles('.config/homebrew/Brewfile', '.config/homebrew/Brewfile.taps') }}
           restore-keys: |
             ${{ runner.os }}-brew-
 
@@ -57,13 +68,21 @@ jobs:
       - name: Create symlinks
         run: make link
 
-      - name: Install Homebrew packages
+      - name: Install Homebrew CLI packages
         run: |
           make brew-bundle-taps
           make brew-bundle
-          make brew-bundle-cask
-          make brew-bundle-vscode
           # make brew-bundle-mas  # Mac App Store は認証が必要なためスキップ
+
+      # push（main マージ）または Brewfile.cask 変更 PR のみ実行
+      - name: Install Homebrew cask packages
+        if: github.event_name == 'push' || steps.brewfile-changes.outputs.cask == 'true'
+        run: make brew-bundle-cask
+
+      # push（main マージ）または Brewfile.vscode 変更 PR のみ実行
+      - name: Install VSCode extensions
+        if: github.event_name == 'push' || steps.brewfile-changes.outputs.vscode == 'true'
+        run: make brew-bundle-vscode
 
       - name: Initialize sheldon
         run: make sheldon
