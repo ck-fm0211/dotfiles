@@ -43,6 +43,10 @@ apply = ['defer']
 github = 'zsh-users/zsh-syntax-highlighting'
 apply = ['defer']
 
+[plugins.lazy]
+local = "~/.config/zsh"
+use = ["lazy.zsh"]
+
 [plugins.anyframe]
 github = 'mollifier/anyframe'
 apply = ['defer']

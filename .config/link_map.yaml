@@ -28,6 +28,9 @@ zsh:
   - 
     src: .config/zsh/.zshrc
     dst: .config/zsh/.zshrc
+  - 
+    src: .config/zsh/lazy.zsh
+    dst: .config/zsh/lazy.zsh
 
 iterm2:
   src: .config/iterm2/com.googlecode.iterm2.plist

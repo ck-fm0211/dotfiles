@@ -2,11 +2,7 @@
 
 ## setup
 ```SHELL
-.bin/install.sh
-.bin/link.sh
-.bin/brew.sh
-.bin/sheldon.sh
-.bin/mac_defaults.sh
+make setup
 ```
 
 ## manually
