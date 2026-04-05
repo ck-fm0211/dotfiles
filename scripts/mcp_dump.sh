@@ -8,6 +8,7 @@ XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-$HOME/.config}"
 # Claude Code の設定ファイルパス
 CLAUDE_JSON="${CLAUDE_CONFIG_DIR:-$XDG_CONFIG_HOME/claude}/.claude.json"
 MCP_SERVERS_JSON="$XDG_CONFIG_HOME/claude/mcp-servers.json"
+SENSITIVE_KEYS='["oauthAccount","token","apiKey","secret","password","credential"]'
 
 # jq コマンドの存在確認
 if ! command -v jq > /dev/null 2>&1; then
@@ -26,8 +27,26 @@ echo "MCP サーバー設定をエクスポートしています..."
 echo "  ソース : $CLAUDE_JSON"
 echo "  出力先 : $MCP_SERVERS_JSON"
 
-jq '.mcpServers // {}' "$CLAUDE_JSON" > "$MCP_SERVERS_JSON"
+removed_count="$(
+  jq --argjson sensitive_keys "$SENSITIVE_KEYS" '
+    [(.mcpServers // {}) | .. | objects | keys_unsorted[]? | select(. as $key | $sensitive_keys | index($key))]
+    | length
+  ' "$CLAUDE_JSON"
+)"
+
+jq --argjson sensitive_keys "$SENSITIVE_KEYS" '
+  def scrub:
+    walk(
+      if type == "object" then
+        with_entries(select(.key as $key | ($sensitive_keys | index($key)) | not))
+      else
+        .
+      end
+    );
+  (.mcpServers // {}) | scrub
+' "$CLAUDE_JSON" > "$MCP_SERVERS_JSON"
 
 echo "エクスポートが完了しました。"
+echo "除外した機密フィールド数: $removed_count"
 echo "登録済み MCP サーバー:"
 jq -r 'keys[]' "$MCP_SERVERS_JSON" | sed 's/^/  - /'
