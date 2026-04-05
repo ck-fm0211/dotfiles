@@ -15,7 +15,7 @@ fi
 
 # cat
 if type "bat" > /dev/null 2>&1; then
-    alias cat="bat -pp"
+    alias cat="bat --style=plain"
 fi
 
 # date
