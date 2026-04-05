@@ -6,7 +6,7 @@ set -euo pipefail
 BASE_DIR="$(cd "$(dirname "$0")/.." && pwd)"
 LINK_MAP="$BASE_DIR/.config/link_map.yaml"
 TIMESTAMP=$(date +%Y%m%d_%H%M%S)
-BACKUP_DIR="$HOME/.dotfiles-backup/$TIMESTAMP"
+BACKUP_DIR="${XDG_STATE_HOME:-$HOME/.local/state}/dotfiles/$TIMESTAMP"
 
 command -v yq >/dev/null 2>&1 || { echo "Error: yq が必要です。brew install yq でインストールしてください。" >&2; exit 1; }
 

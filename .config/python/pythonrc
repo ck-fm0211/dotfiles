@@ -14,7 +14,7 @@ def setup_history():
     else:
         state_home = Path.home() / '.local' / 'state'
 
-    history: Path = state_home / 'python_history'
+    history: Path = state_home / 'python' / 'history'
 
     readline.read_history_file(str(history))
     atexit.register(readline.write_history_file, str(history))
