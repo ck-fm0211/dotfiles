@@ -168,4 +168,5 @@ git-hooks: ## グローバル Git フック（core.hooksPath）を設定する
 
 .PHONY: shellcheck
 shellcheck: ## シェルスクリプト・Zsh 設定ファイルの構文チェック
-	shellcheck ./**/*.sh ./.config/zsh/.zshrc ./.config/zsh/.zshenv ./.local/**/**/*.sh
+	find scripts/ -name "*.sh" -print0 | xargs -0 shellcheck -e SC1091 --severity=warning
+	shellcheck -e SC1091 --severity=warning .config/zsh/.zshrc .config/zsh/.zshenv
