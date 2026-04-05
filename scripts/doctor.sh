@@ -173,8 +173,10 @@ else
   warn "init.defaultBranch: ${git_branch:-未設定}（'main' を推奨）"
 fi
 if [ -n "$git_hooks" ]; then
-  if [ -d "$git_hooks" ]; then
-    hook_count=$(find "$git_hooks" -maxdepth 1 -type f -perm +111 2>/dev/null | wc -l | tr -d ' ')
+  # ~ はクォート内で展開されないため $HOME に置換して評価する
+  git_hooks_expanded="${git_hooks/#\~/$HOME}"
+  if [ -d "$git_hooks_expanded" ]; then
+    hook_count=$(find "$git_hooks_expanded" -maxdepth 1 -type f -perm +111 2>/dev/null | wc -l | tr -d ' ')
     ok "core.hooksPath: ${git_hooks}（${hook_count}件の実行可能フック）"
   else
     warn "core.hooksPath が設定されていますがディレクトリが存在しません: $git_hooks"
