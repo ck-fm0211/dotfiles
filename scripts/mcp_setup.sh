@@ -31,8 +31,11 @@ echo "MCP サーバーを登録しています..."
 # 現在登録済みの MCP サーバー名を取得
 registered_servers="$(claude mcp list 2>/dev/null || true)"
 
-# JSON の各エントリに対して処理
-mapfile -t server_names < <(jq -r 'keys[]' "$MCP_SERVERS_JSON")
+# JSON の各エントリに対して処理（bash 3.2 互換: mapfile の代わりに while read を使用）
+server_names=()
+while IFS= read -r line; do
+  server_names+=("$line")
+done < <(jq -r 'keys[]' "$MCP_SERVERS_JSON")
 
 for name in "${server_names[@]}"; do
   # 既登録チェック: サーバー名が一覧に含まれているか確認
@@ -63,8 +66,11 @@ for name in "${server_names[@]}"; do
     if [ "$args_count" -eq 0 ]; then
       claude mcp add -s user "$name" -t stdio "${env_flags[@]}" -- "$server_command"
     else
-      # args 配列を改行区切りで読み取り、配列に格納
-      mapfile -t server_args < <(jq -r --arg n "$name" '.[$n].args[]' "$MCP_SERVERS_JSON")
+      # args 配列を改行区切りで読み取り、配列に格納（bash 3.2 互換）
+      server_args=()
+      while IFS= read -r line; do
+        server_args+=("$line")
+      done < <(jq -r --arg n "$name" '.[$n].args[]' "$MCP_SERVERS_JSON")
       claude mcp add -s user "$name" -t stdio "${env_flags[@]}" -- "$server_command" "${server_args[@]}"
     fi
 
