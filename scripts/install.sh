@@ -10,5 +10,11 @@ echo >> $HOME/.zshrc
 echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> $HOME/.zshrc
 eval "$(/opt/homebrew/bin/brew shellenv)"
 brew --version
-
 echo 'export PATH=/opt/homebrew/bin:$PATH' >> $HOME/.zshrc
+
+# XDG
+echo "export ZDOTDIR=$HOME/.config/zsh" | sudo tee -a /etc/zshenv
+sudo chmod 444 /etc/zshenv
+
+# セットアップに必要なものだけ先にいれる
+brew install yq

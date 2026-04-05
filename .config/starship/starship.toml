@@ -37,7 +37,7 @@ disabled = true
 disabled = true
 
 [git_status]
-disabled = true
+disabled = false
 
 [time]
 format = "[$time]($style) "
@@ -47,3 +47,6 @@ disabled = false
 [cmd_duration]
 show_milliseconds = true
 format = ' [󱫌 $duration]($style)'
+
+[gcloud]
+format = '[GC:$account(\($project\))]($style) '
