@@ -91,7 +91,7 @@ fi
 '''
 
 [plugins.mise]
-inline = 'command -v mise >/dev/null 2>&1 && eval "$(mise activate zsh)"'
+inline = 'command -v mise >/dev/null 2>&1 && eval "$(mise activate zsh 2>/dev/null)"'
 
 [plugins.anyframe]
 github = 'mollifier/anyframe'
