@@ -14,33 +14,30 @@ jobs:
     - uses: actions/checkout@v3
 
     - name: Run install.sh
-      run: ${GITHUB_WORKSPACE}/scripts/install.sh
+      run: make install
 
     - name: Run link.sh
-      run: ${GITHUB_WORKSPACE}/scripts/link.sh
+      run: make link
 
-    - name: Run brew.sh
-      # masはskip
+    - name: Run brew
       run: |
-        temp_file=$(mktemp)
-        cat ${GITHUB_WORKSPACE}/.config/homebrew/.Brewfile | sed '/^mas /d' > "$temp_file"
-        cat $temp_file
-        cat "$temp_file" > ${GITHUB_WORKSPACE}/.config/homebrew/.Brewfile
-        ${GITHUB_WORKSPACE}/scripts/brew.sh
+        make brew-bundle-taps
+        make brew-bundle
+        make brew-bundle-cask
+        make brew-bundle-vscode
+        # make brew-bundle-mas # skip
 
     - name: Run sheldon.sh
-      run: ${GITHUB_WORKSPACE}/scripts/sheldon.sh
+      run: make sheldon 
 
     - name: Run mac_defaults.sh
-      run: ${GITHUB_WORKSPACE}/scripts/mac_defaults.sh
+      run: make mac_defaults
 
     - name: install aws cli
-      run: ${GITHUB_WORKSPACE}/scripts/install_awscli.sh
+      run: make install_awscli
 
     - name: install gcloud
-      run: ${GITHUB_WORKSPACE}/scripts/install_gcloud.sh
+      run: make install_gcloud
 
-    # - name: Load .zshrc
-    #   run: |
-    #     zsh ~/.zshrc 2> error.log; cat error.log
-    #     if [ -s error.log ]; then false; fi
+    - name: shellcheck
+      run: make shellcheck

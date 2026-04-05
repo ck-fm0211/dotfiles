@@ -1,4 +1,4 @@
-#!/bin/zsh
+#!/bin/bash
 
 set -e
 
@@ -15,8 +15,8 @@ echo "$gcloud_path"
 echo "$gcloud_config_path"
 
 # 確認メッセージ
-read "?gcloudをアンインストールしますか？ (y/N): " confirm
-if [[ "$confirm" != "y" && "$confirm" != "Y" ]]; then
+read -p "?gcloudをアンインストールしますか？ (y/N): " -r confirm
+if [[ ! "$confirm" =~ ^[yY]$ ]]; then
     echo "アンインストールをキャンセルしました。"
     exit 0
 fi
@@ -29,7 +29,7 @@ rm -rf "$gcloud_config_path"
 
 # キャッシュを削除
 echo "キャッシュファイルを削除します。permission errorが出る可能性がありますが問題ありません"
-find ~/Library/Caches/ -type d -name "google-cloud-sdk" | xargs rm -r
+find ~/Library/Caches/ -type d -name "google-cloud-sdk" -print0 | xargs rm -r
 
 echo "アンインストールが完了しました。"
 exit 0
