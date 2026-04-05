@@ -29,6 +29,6 @@
 | Task | 内容 | DoD | Depends | Status |
 |------|------|-----|---------|--------|
 | 3.1 | `brew-bundle-cask` / `brew-bundle-vscode` を path filter で条件実行（PR時は該当Brewfile変更時のみ、push時は常時） | PRで Brewfile.cask/vscode 未変更時に該当ステップがスキップされること | - | cc:完了 |
-| 3.2 | Homebrewキャッシュから `/opt/homebrew/Cellar` を除外（DL済みbottleのみキャッシュ） | キャッシュリストアが 156s→30s以下になること | - | cc:TODO（3.1実施後の実測値で判断） |
+| 3.2 | ~~Homebrewキャッシュから `/opt/homebrew/Cellar` を除外~~ | — | — | 却下（Cellar 除外するとキャッシュhit時にCLIインストールが毎回60-90sかかり逆効果。Cellar込みでキャッシュヒット時は restore ~20-30s + install ~5-10s と高速） |
 | 3.3 | ~~`install-awscli` / `install-gcloud` / `install-claude-code` をCIでスキップ~~ | — | — | 却下（外部URL依存・.zshenv書き換えロジック等、スクリプトのバグ検出にCIが有効なため） |
 | 3.4 | `shellcheck` ジョブと `macos-test` ジョブを並列実行（`needs` 依存を外す） | 2ジョブが並列で動作しCIの総時間が短縮されること | - | cc:完了 |
