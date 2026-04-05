@@ -18,7 +18,7 @@ defaults write com.apple.screencapture location ~/screenshots
 defaults write com.apple.screencapture type -string "png"
 
 # Show bluetooth in the menu bar
-defaults write com.apple.controlcenter "NSStatusItem Visible Bluetooth" -bool true
+defaults -currentHost write com.apple.controlcenter.plist Bluetooth -int 18
 
 ## dockを左に
 defaults write com.apple.dock orientation -string "left"
