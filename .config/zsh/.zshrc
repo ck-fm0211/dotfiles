@@ -23,11 +23,21 @@ fi
 # sheldon
 command -v sheldon &>/dev/null && eval "$(sheldon source)"
 
-# gcloud
+# gcloud（インストール済みの場合のみ読み込む）
 # shellcheck disable=SC1091
-if [ -f "$HOME/google-cloud-sdk/path.zsh.inc" ]; then . "$HOME/google-cloud-sdk/path.zsh.inc"; fi
-# shellcheck disable=SC1091
-if [ -f "$HOME/google-cloud-sdk/completion.zsh.inc" ]; then . "$HOME/google-cloud-sdk/completion.zsh.inc"; fi
+if command -v gcloud &>/dev/null; then
+  GCLOUD_SDK_ROOT="${CLOUDSDK_ROOT_DIR:-$HOME/google-cloud-sdk}"
+  if [ -f "$GCLOUD_SDK_ROOT/path.zsh.inc" ]; then . "$GCLOUD_SDK_ROOT/path.zsh.inc"; fi
+  # 補完は lazy load（初回 tab 補完時に初期化）
+  if [ -f "$GCLOUD_SDK_ROOT/completion.zsh.inc" ]; then
+    gcloud_completion_load() {
+      # shellcheck disable=SC1091
+      . "$GCLOUD_SDK_ROOT/completion.zsh.inc"
+      compdef _gcloud gcloud
+    }
+    compdef gcloud_completion_load gcloud 2>/dev/null || true
+  fi
+fi
 
 # iterm2
 # shellcheck disable=SC1091
