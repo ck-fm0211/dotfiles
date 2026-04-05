@@ -1,6 +1,9 @@
 #!/bin/zsh
 set -e
 
+## 時刻を秒まで表示
+defaults write com.apple.menuextra.clock ShowSeconds -bool true
+
 ## 隠しファイルを表示
 defaults write com.apple.finder AppleShowAllFiles -boolean true
 

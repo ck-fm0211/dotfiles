@@ -12,5 +12,3 @@ eval "$(/opt/homebrew/bin/brew shellenv)"
 brew --version
 
 echo 'export PATH=/opt/homebrew/bin:$PATH' >> $HOME/.zshrc
-
-brew bundle --global
