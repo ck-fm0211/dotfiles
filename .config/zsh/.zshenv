@@ -1,9 +1,12 @@
 # XDG
 # https://wiki.archlinux.jp/index.php/XDG_Base_Directory
-export XDG_DATA_HOME=$HOME/.local/share/
-export XDG_CONFIG_HOME=$HOME/.config/
-export XDG_STATE_HOME=$HOME/.local/state/
+export XDG_DATA_HOME=$HOME/.local/share
+export XDG_CONFIG_HOME=$HOME/.config
+export XDG_STATE_HOME=$HOME/.local/state
 export XDG_CACHE_HOME=$HOME/.cache
+
+# zsh
+export HISTFILE="$XDG_STATE_HOME"/zsh/history
 
 # homebrew
 export PATH=/opt/homebrew/bin:$PATH
@@ -14,6 +17,16 @@ export STARSHIP_CONFIG=$HOME/.config/starship/starship.toml
 
 # aws cli
 export AWS_PAGER=""
+
+# docker
+export DOCKER_CONFIG="$XDG_CONFIG_HOME"/docker
+
+# less
+export LESSHISTFILE="$XDG_STATE_HOME"/less/history
+
+# less
+export PYTHONSTARTUP="$HOME"/python/pythonrc
+touch $XDG_STATE_HOME/python_history
 
 # 環境変数
 export CLICOLOR=1

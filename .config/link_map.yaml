@@ -39,3 +39,7 @@ iterm2:
 vscode:
   src: .config/vscode/settings.json
   dst: "Library/Application Support/Code/User/settings.json"
+
+python:
+  src: .config/python/pythonrc
+  dst: python/pythonrc
