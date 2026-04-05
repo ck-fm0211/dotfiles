@@ -30,7 +30,7 @@ export DOCKER_CONFIG="$XDG_CONFIG_HOME"/docker
 # less
 export LESSHISTFILE="$XDG_STATE_HOME"/less/history
 
-# less
+# python
 export PYTHONSTARTUP="$HOME"/python/pythonrc
 touch "$XDG_STATE_HOME/python_history"
 
