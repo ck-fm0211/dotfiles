@@ -8,7 +8,6 @@ git:
     dst: .config/git/ignore
 
 homebrew:
-  # need `export $HOMEBREW_BUNDLE_FILE_GLOBAL=$HOME/.config/homebrew/.Brewfile`
   - 
     src: .config/homebrew/Brewfile
     dst: .config/homebrew/Brewfile
