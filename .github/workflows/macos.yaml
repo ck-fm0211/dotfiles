@@ -40,12 +40,6 @@ jobs:
     - name: install gcloud
       run: ${GITHUB_WORKSPACE}/scripts/install_gcloud.sh
 
-    - name: uninstall aws cli
-      run: ${GITHUB_WORKSPACE}/scripts/uninstall_awscli.sh
-
-    - name: uninstall gcloud
-      run: ${GITHUB_WORKSPACE}/scripts/uninstall_gcloud.sh
-
     # - name: Load .zshrc
     #   run: |
     #     zsh ~/.zshrc 2> error.log; cat error.log
