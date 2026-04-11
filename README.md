@@ -50,6 +50,8 @@ cd ~/dotfiles
 make setup
 ```
 
+> `scripts/mcp_dump.sh` は `mcp-servers.json` へのエクスポート時に、`token` や `apiKey` などの機密フィールドを自動で除外します。
+
 ### 個別にセットアップしたい場合
 
 ```bash

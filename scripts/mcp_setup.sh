@@ -7,6 +7,33 @@ XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-$HOME/.config}"
 
 # MCP サーバー定義ファイルのパス
 MCP_SERVERS_JSON="$XDG_CONFIG_HOME/claude/mcp-servers.json"
+SYNC_MODE=0
+
+usage() {
+  cat <<'EOF'
+Usage: mcp_setup.sh [--sync]
+
+  --sync    mcp-servers.json に存在しない登録済みサーバーも削除して同期する
+EOF
+}
+
+while [ "$#" -gt 0 ]; do
+  case "$1" in
+    --sync)
+      SYNC_MODE=1
+      ;;
+    -h|--help)
+      usage
+      exit 0
+      ;;
+    *)
+      echo "エラー: 未知のオプションです: $1" >&2
+      usage >&2
+      exit 1
+      ;;
+  esac
+  shift
+done
 
 # jq コマンドの存在確認
 if ! command -v jq > /dev/null 2>&1; then
@@ -28,8 +55,11 @@ fi
 
 echo "MCP サーバーを登録しています..."
 
-# 現在登録済みの MCP サーバー名を取得
-registered_servers="$(claude mcp list 2>/dev/null || true)"
+tmp_dir="$(mktemp -d)"
+trap 'rm -rf "$tmp_dir"' EXIT
+
+desired_names_file="$tmp_dir/desired_names.txt"
+registered_names_file="$tmp_dir/registered_names.txt"
 
 # JSON の各エントリに対して処理（bash 3.2 互換: mapfile の代わりに while read を使用）
 server_names=()
@@ -37,9 +67,28 @@ while IFS= read -r line; do
   server_names+=("$line")
 done < <(jq -r 'keys[]' "$MCP_SERVERS_JSON")
 
+printf '%s\n' "${server_names[@]}" > "$desired_names_file"
+
+while IFS= read -r line; do
+  [ -z "$line" ] && continue
+  name_only="$(printf '%s\n' "$line" | awk '{print $1}')"
+  [ -n "$name_only" ] && printf '%s\n' "$name_only" >> "$registered_names_file"
+done < <(claude mcp list 2>/dev/null | tail -n +2)
+
+if [ "$SYNC_MODE" -eq 1 ] && [ -f "$registered_names_file" ]; then
+  while IFS= read -r name; do
+    [ -z "$name" ] && continue
+
+    if ! grep -Fqx -- "$name" "$desired_names_file"; then
+      echo "削除: ${name} は mcp-servers.json に存在しないため登録を解除します。"
+      claude mcp remove -s user "$name"
+    fi
+  done < "$registered_names_file"
+fi
+
 for name in "${server_names[@]}"; do
-  # 既登録チェック: サーバー名が一覧に含まれているか確認
-  if echo "$registered_servers" | grep -q "^${name}"; then
+  # 既登録チェック: 機械可読な get コマンドの終了コードで判定
+  if claude mcp get "$name" > /dev/null 2>&1; then
     echo "スキップ: ${name} はすでに登録済みです。"
     continue
   fi
@@ -50,16 +99,16 @@ for name in "${server_names[@]}"; do
   if [ "$server_type" = "stdio" ]; then
     # コマンドと引数を取得
     server_command="$(jq -r --arg n "$name" '.[$n].command' "$MCP_SERVERS_JSON")"
-    args_count="$(jq -r --arg n "$name" '.[$n].args | length' "$MCP_SERVERS_JSON")"
+    args_count="$(jq -r --arg n "$name" '(.[$n].args // []) | length' "$MCP_SERVERS_JSON")"
 
     # -e KEY=VALUE 形式の環境変数フラグを構築
     env_flags=()
-    env_count="$(jq -r --arg n "$name" '.[$n].env | length' "$MCP_SERVERS_JSON")"
+    env_count="$(jq -r --arg n "$name" '(.[$n].env // {}) | length' "$MCP_SERVERS_JSON")"
     if [ "$env_count" -gt 0 ]; then
       # 環境変数を KEY=VALUE 形式で列挙して -e フラグを付与
       while IFS="=" read -r key value; do
         env_flags+=("-e" "${key}=${value}")
-      done < <(jq -r --arg n "$name" '.[$n].env | to_entries[] | "\(.key)=\(.value)"' "$MCP_SERVERS_JSON")
+      done < <(jq -r --arg n "$name" '(.[$n].env // {}) | to_entries[] | "\(.key)=\(.value)"' "$MCP_SERVERS_JSON")
     fi
 
     # args が空の場合はコマンドだけ、ある場合は引数を展開して渡す
@@ -70,7 +119,7 @@ for name in "${server_names[@]}"; do
       server_args=()
       while IFS= read -r line; do
         server_args+=("$line")
-      done < <(jq -r --arg n "$name" '.[$n].args[]' "$MCP_SERVERS_JSON")
+      done < <(jq -r --arg n "$name" '(.[$n].args // [])[]' "$MCP_SERVERS_JSON")
       claude mcp add -s user "$name" -t stdio "${env_flags[@]}" -- "$server_command" "${server_args[@]}"
     fi
 
