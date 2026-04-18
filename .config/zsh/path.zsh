@@ -30,6 +30,11 @@ if [[ -d "$HOME/go/bin" ]]; then
   path=("$HOME/go/bin" $path)
 fi
 
+# Google Cloud SDK
+if [[ -d "$HOME/google-cloud-sdk/bin" ]]; then
+  path=("$HOME/google-cloud-sdk/bin" $path)
+fi
+
 # 重複を除去して export
 typeset -U path
 export PATH
