@@ -38,8 +38,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      # Brewfile.cask / Brewfile.vscode の変更検出（PR 時のみ有効）
-      - name: Detect changed Brewfiles
+      # Brewfile.cask / Brewfile.vscode / packages.txt の変更検出（PR 時のみ有効）
+      - name: Detect changed files
         id: brewfile-changes
         uses: dorny/paths-filter@v3
         with:
@@ -48,6 +48,8 @@ jobs:
               - '.config/homebrew/Brewfile.cask'
             vscode:
               - '.config/homebrew/Brewfile.vscode'
+            npm:
+              - '.config/npm/packages.txt'
 
       # Homebrew のダウンロードキャッシュのみ保持（Cellar はランナーとの競合を避けるため除外）
       - name: Cache Homebrew downloads
@@ -89,6 +91,11 @@ jobs:
 
       - name: Install mise-managed tools (node, python, go, terraform)
         run: make mise-install
+
+      # push（main マージ）または packages.txt 変更 PR のみ実行
+      - name: Install npm global packages
+        if: github.event_name == 'push' || steps.brewfile-changes.outputs.npm == 'true'
+        run: make npm-global
 
       - name: Apply macOS defaults
         run: make mac-defaults

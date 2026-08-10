@@ -1,0 +1,6 @@
+# npm グローバルパッケージリスト
+# 書式: 1行1パッケージ（# でコメント、空行は無視）
+# make npm-global でインストール、make doctor で状態確認
+#
+# 注意: @anthropic-ai/claude-code は make install-claude-code でも管理（環境変数設定を含むため）
+@anthropic-ai/claude-code

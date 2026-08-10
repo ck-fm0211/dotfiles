@@ -267,6 +267,26 @@ if command -v gh >/dev/null 2>&1; then
   fi
 fi
 
+# ----------- npm グローバルパッケージ -----------
+section "npm グローバルパッケージ"
+npm_packages_file="$BASE_DIR/.config/npm/packages.txt"
+if [ ! -f "$npm_packages_file" ]; then
+  warn "packages.txt が見つかりません: $npm_packages_file"
+elif ! command -v npm >/dev/null 2>&1; then
+  warn "npm が未インストール（make mise-install を実行してください）"
+else
+  while IFS= read -r line || [ -n "$line" ]; do
+    [[ "$line" =~ ^[[:space:]]*# ]] && continue
+    [[ -z "${line// }" ]] && continue
+    pkg="$line"
+    if npm list -g --depth=0 "$pkg" >/dev/null 2>&1; then
+      ok "$pkg: インストール済み"
+    else
+      warn "$pkg: 未インストール（make npm-global を実行してください）"
+    fi
+  done < "$npm_packages_file"
+fi
+
 # ----------- Sheldon プラグイン -----------
 section "Sheldon プラグイン"
 if command -v sheldon >/dev/null 2>&1; then

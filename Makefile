@@ -9,7 +9,7 @@ help: ## コマンド一覧を表示
 # ============================================================
 
 .PHONY: setup
-setup: install brew-bundle-taps brew-bundle brew-bundle-cask brew-bundle-vscode sheldon link mise-install mac-defaults git-hooks install-awscli install-gcloud install-claude-code mcp-setup ## フルセットアップを一括実行
+setup: install brew-bundle-taps brew-bundle brew-bundle-cask brew-bundle-vscode sheldon link mise-install npm-global mac-defaults git-hooks install-awscli install-gcloud install-claude-code mcp-setup ## フルセットアップを一括実行
 
 .PHONY: bootstrap
 bootstrap: ## 新規 Mac で make を使わずに一発セットアップ（install.sh → link.sh → make setup の順に実行）
@@ -135,6 +135,25 @@ install-claude-code: ## Claude Code（Anthropic CLI）をインストール
 .PHONY: uninstall-claude-code
 uninstall-claude-code: ## Claude Code をアンインストール
 	./scripts/uninstall_claude_code.sh
+
+.PHONY: npm-global
+npm-global: ## .config/npm/packages.txt に記載されたグローバル npm パッケージをインストール
+	mise exec -- ./scripts/npm_global.sh
+
+.PHONY: npm-dump
+npm-dump: ## 現在のグローバル npm パッケージを .config/npm/packages.txt に書き出す
+	@echo "# npm グローバルパッケージリスト" > .config/npm/packages.txt
+	@echo "# 書式: 1行1パッケージ（# でコメント、空行は無視）" >> .config/npm/packages.txt
+	@echo "# make npm-global でインストール、make doctor で状態確認" >> .config/npm/packages.txt
+	@echo "#" >> .config/npm/packages.txt
+	@npm list -g --depth=0 --parseable 2>/dev/null \
+	  | tail -n +2 \
+	  | xargs -I{} basename {} \
+	  | grep -v '^npm$$' \
+	  | grep -v '^corepack$$' \
+	  >> .config/npm/packages.txt
+	@echo ">>> .config/npm/packages.txt を更新しました"
+	@cat .config/npm/packages.txt
 
 .PHONY: mcp-setup
 mcp-setup: ## MCPサーバーをClaude Codeにグローバル登録

@@ -63,6 +63,16 @@ Codex による網羅的リポジトリ分析で洗い出した課題を優先�
 | 5.2 | `scripts/mcp_setup.sh` の既登録判定を機械可読出力ベースに変更し、差分更新・削除まで対応する同期型に改善する | `claude mcp list` の出力形式変更に左右されない判定になる | 5.3 | cc:完了 [b626e51] |
 | 5.3 | `scripts/mcp_dump.sh` に機密フィールド除外の `jq` フィルタを明示追加し、README にも注意事項を記載する | dump 結果に `oauthAccount` 等の機密フィールドが含まれないことを保証 | 5.2 | cc:完了 [b626e51] |
 
+## Phase 6: npm グローバルパッケージ管理
+
+| Task | 内容 | DoD | Depends | Status |
+|------|------|-----|---------|--------|
+| 6.1 | `.config/npm/packages.txt` を作成し、現在インストール済みグローバルパッケージ（`@anthropic-ai/claude-code`）を初期エントリとして追加する。1行1パッケージ・`#` コメント・空行無視の形式 | ファイルが存在し、現在の `npm list -g --depth=0` と一致する ユーザー管理パッケージが列挙されている | - | cc:完了 |
+| 6.2 | `scripts/npm_global.sh` を作成する。`packages.txt` を読み込み `npm install -g` を実行。コメント・空行をスキップし冪等動作 | `make shellcheck` が通る。再実行しても副作用がない | 6.1 | cc:完了 |
+| 6.3 | `Makefile` に `make npm-global` ターゲットを追加し、`make setup` チェーンの `mise-install` 直後に組み込む | `make npm-global` で packages.txt のパッケージがインストールされる。`make setup` の依存に含まれる。`make help` に説明が表示される | 6.2 | cc:完了 |
+| 6.4 | CI（`.github/workflows/macos.yaml`）に `packages.txt` 変更検出と `npm-global` ステップを追加する。Brewfile.cask と同じパターン（push 時 or ファイル変更 PR 時のみ実行） | `packages.txt` を変更した PR でのみ `make npm-global` が CI で実行される。push（main マージ）時は常に実行 | 6.3 | cc:完了 |
+| 6.5 | `scripts/doctor.sh` に npm グローバルパッケージ検証を追加する。`packages.txt` の各エントリが `npm list -g` で確認できなければ WARN を出す | `make doctor` が npm グローバルパッケージの状態を表示する | 6.1 | cc:完了 |
+
 ---
 
 ## 優先度サマリー
