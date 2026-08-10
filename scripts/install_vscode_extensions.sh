@@ -50,4 +50,6 @@ while IFS= read -r line || [ -n "$line" ]; do
 done < "$BREWFILE"
 
 echo ">>> 完了（インストール: ${installed} 件、スキップ: ${skipped} 件、失敗: ${failed} 件）"
-[ "$failed" -eq 0 ]
+if [ "$failed" -gt 0 ]; then
+  echo ">>> 一部の拡張機能はインストールに失敗しました（認証が必要な拡張機能は手動でインストールしてください）"
+fi
