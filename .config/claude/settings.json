@@ -5,7 +5,17 @@
       "Bash(make:*)",
       "Bash(brew:*)",
       "Bash(sheldon:*)",
-      "Bash(mise:*)"
+      "Bash(mise:*)",
+      "Bash(grep -nA 25 \"def __post_init__\\\\|EXAM_GUIDES_PATH\\\\|EXAM_GUIDE_URLS\\\\|_load_exam_guides\" /Users/chikafumi/develop/github/ck-fm0211/examtopics_scraper/script/config.py)",
+      "Bash(grep -n \"^## Phase\\\\|^## マーカー\\\\|^---$\\\\|^# \" Plans.md)",
+      "Bash(printf '# Session Log — 2026-04\\\\n\\\\n元ファイル: `.claude/memory/session-log.md` から 30 日以降のエントリを移動。\\\\n移動日: 2026-05-27\\\\n\\\\n---\\\\n\\\\n')",
+      "Bash(tail -n +12 .claude/memory/session-log.md)",
+      "mcp__codex__codex-reply",
+      "Bash(python3 scripts/promote_retros.py --dry-run)",
+      "Bash(python3 -c \"import mcp; print\\('mcp:', mcp.__version__ if hasattr\\(mcp, '__version__'\\) else 'installed'\\)\")",
+      "Bash(python3 -c \"from mcp.client.stdio import stdio_client; from mcp import StdioServerParameters; print\\('stdio API: available'\\)\")",
+      "Skill(claude-code-harness:maintenance)",
+      "Skill(claude-code-harness:maintenance:*)"
     ],
     "deny": [
       "Bash(rm *)",
@@ -37,7 +47,14 @@
       "Write(~/.config/zsh/.zshrc)",
       "Edit(~/.bashrc)",
       "Write(~/.bashrc)"
+    ],
+    "additionalDirectories": [
+      "/Users/chikafumi/develop/github/ck-fm0211/examtopics_scraper/.claude/memory",
+      "/Users/chikafumi/develop/github/ck-fm0211/examtopics_scraper/.claude/memory/archive"
     ]
+  },
+  "enabledPlugins": {
+    "claude-code-harness@claude-code-harness-marketplace": true
   },
   "extraKnownMarketplaces": {
     "claude-code-harness-marketplace": {
@@ -51,7 +68,5 @@
     "enabled": true,
     "autoAllowBashIfSandboxed": false
   },
-  "enabledPlugins": {
-    "claude-code-harness@claude-code-harness-marketplace": true
-  }
+  "effortLevel": "high"
 }

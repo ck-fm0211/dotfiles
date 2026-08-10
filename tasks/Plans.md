@@ -59,9 +59,9 @@ Codex による網羅的リポジトリ分析で洗い出した課題を優先�
 
 | Task | 内容 | DoD | Depends | Status |
 |------|------|-----|---------|--------|
-| 5.1 | `.config/claude/settings.json` の `Bash(make:*)` 全面許可の意図をドキュメントに明記する、または make サブコマンド単位で絞る | 「make 経由は deny をバイパスできる」という事実が CLAUDE.md に記載されている | - | cc:TODO |
-| 5.2 | `scripts/mcp_setup.sh` の既登録判定を機械可読出力ベースに変更し、差分更新・削除まで対応する同期型に改善する | `claude mcp list` の出力形式変更に左右されない判定になる | 5.3 | cc:TODO |
-| 5.3 | `scripts/mcp_dump.sh` に機密フィールド除外の `jq` フィルタを明示追加し、README にも注意事項を記載する | dump 結果に `oauthAccount` 等の機密フィールドが含まれないことを保証 | 5.2 | cc:TODO |
+| 5.1 | `.config/claude/settings.json` の `Bash(make:*)` 全面許可の意図をドキュメントに明記する、または make サブコマンド単位で絞る | 「make 経由は deny をバイパスできる」という事実が CLAUDE.md に記載されている | - | cc:完了 [b626e51] |
+| 5.2 | `scripts/mcp_setup.sh` の既登録判定を機械可読出力ベースに変更し、差分更新・削除まで対応する同期型に改善する | `claude mcp list` の出力形式変更に左右されない判定になる | 5.3 | cc:完了 [b626e51] |
+| 5.3 | `scripts/mcp_dump.sh` に機密フィールド除外の `jq` フィルタを明示追加し、README にも注意事項を記載する | dump 結果に `oauthAccount` 等の機密フィールドが含まれないことを保証 | 5.2 | cc:完了 [b626e51] |
 
 ---
 

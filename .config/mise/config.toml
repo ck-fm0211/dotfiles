@@ -10,7 +10,7 @@
 # 例: `mise ls-remote node`, `mise ls-remote python`, `mise ls-remote go`, `mise ls-remote terraform`
 
 # Node.js 22 LTS
-node = "22"
+node = "22.22.2"
 
 # Python 3.13
 python = "3.13"

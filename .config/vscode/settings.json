@@ -89,4 +89,6 @@
     "scminput": false
   },
   "claudeCode.preferredLocation": "panel",
+  "claudeStatus.displayMode": "percent",
+  "claudeStatus.credentials.path": "",
 }
