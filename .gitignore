@@ -3,6 +3,7 @@
 .claude/logs/
 .claude/sessions/
 .claude/worktrees/
+.claude/memory/session-log.md
 
 # OS
 .DS_Store
