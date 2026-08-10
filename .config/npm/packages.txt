@@ -4,3 +4,4 @@
 #
 # 注意: @anthropic-ai/claude-code は make install-claude-code でも管理（環境変数設定を含むため）
 @anthropic-ai/claude-code
+@qiita/qiita-cli
