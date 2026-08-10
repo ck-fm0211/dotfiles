@@ -90,8 +90,8 @@ brew-bundle-taps: ## Brewfile.taps のサードパーティ tap を追加
 	brew bundle --file=./.config/homebrew/Brewfile.taps
 
 .PHONY: brew-bundle-vscode
-brew-bundle-vscode: ## Brewfile.vscode の VSCode 拡張機能をインストール
-	brew bundle --file=./.config/homebrew/Brewfile.vscode
+brew-bundle-vscode: ## Brewfile.vscode の VSCode 拡張機能をインストール（逐次実行で競合回避）
+	./scripts/install_vscode_extensions.sh
 
 .PHONY: brew-dump
 brew-dump: ## 現在のインストール済みパッケージを Brewfile に書き出す
